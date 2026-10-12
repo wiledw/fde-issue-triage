@@ -1,0 +1,8 @@
+{"ts": "2026-10-12T11:48:04.326Z", "run_id": "21694", "seq": 1, "event": "tool_call", "name": "search_issues", "input": {"query": "--target=. wheel directory entry escapes its destination"}}
+{"ts": "2026-10-12T11:48:04.326Z", "run_id": "21694", "seq": 2, "event": "tool_result", "is_error": false, "content": "No matching earlier issues.", "seen_issue_numbers": []}
+{"ts": "2026-10-12T11:48:06.660Z", "run_id": "21694", "seq": 1, "event": "tool_call", "name": "search_uv_docs", "input": {"query": "pip install --target"}}
+{"ts": "2026-10-12T11:48:06.660Z", "run_id": "21694", "seq": 2, "event": "tool_result", "is_error": true, "content": "Upstream returned HTTP 422", "seen_issue_numbers": []}
+{"ts": "2026-10-12T11:48:11.331Z", "run_id": "21694", "seq": 1, "event": "tool_call", "name": "search_issues", "input": {"query": "Wheel directory entry escapes its destination"}}
+{"ts": "2026-10-12T11:48:11.332Z", "run_id": "21694", "seq": 2, "event": "tool_result", "is_error": false, "content": "No matching earlier issues.", "seen_issue_numbers": []}
+{"ts": "2026-10-12T11:48:13.180Z", "run_id": "21694", "seq": 1, "event": "tool_call", "name": "get_package_metadata", "input": {"name": "annotated-types", "version": "0.8.0"}}
+{"ts": "2026-10-12T11:48:13.180Z", "run_id": "21694", "seq": 2, "event": "tool_result", "is_error": false, "content": "{\n \"name\": \"annotated-types\",\n \"version\": \"0.8.0\",\n \"requires_python\": \">=3.10\",\n \"requires_dist\": []\n}", "seen_issue_numbers": []}

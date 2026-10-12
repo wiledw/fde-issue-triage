@@ -1,0 +1,356 @@
+{
+ "20768": {
+  "type": "enhancement",
+  "type_differs_from_reporter": false,
+  "needs_mre": false,
+  "missing_info": [],
+  "likely_external": false,
+  "external_evidence": "",
+  "possible_duplicates": [],
+  "confidence": "high",
+  "escalate_to_human": true,
+  "escalation_reason": "Whether uv should change its release archive layout is a product and release-compatibility decision: the reporter acknowledges it would be a breaking change needing a major-version bump and setup-uv changes, and it is blocked on cargo-dist support.",
+  "rationale": "The reporter asks uv to publish flat release archives (uv and uvx at the root) instead of nesting them under a target-named directory, to match the Windows zip layout and simplify streaming extraction. uv is working as designed; the request is for different behaviour, so enhancement, matching the reporter's label. Nothing reported is a defect in uv or another tool, so not external. A search_issues query on archive layout and top-level directory returned only the unrelated uv build backend issue (#3957), and a second query on cargo-dist archive layout returned no matches, so no duplicates were found. Escalated because the change is breaking and depends on a maintainer decision."
+ },
+ "20854": {
+  "type": "bug",
+  "type_differs_from_reporter": false,
+  "needs_mre": false,
+  "missing_info": [
+   "Name of the antimalware product and its detection name for uvw.exe",
+   "How uvw.exe 0.12 was obtained (official installer script or manual zip extraction)",
+   "Exact Windows version and architecture"
+  ],
+  "likely_external": true,
+  "external_evidence": "The reporter's only evidence is a VirusTotal detection page for the 0.12 uvw.exe; no uv behaviour is described. Antivirus heuristics flagging a freshly built Windows binary is a defect or false positive in the security vendor's detection, not in uv's logic. Issue #15011 reports the same pattern (Windows Defender flagging uvw.exe as Trojan:Script/Phonzy.A!ml) and was closed as a duplicate with the external label.",
+  "possible_duplicates": [
+   {
+    "number": 15011,
+    "reason": "Same report: Windows antivirus flags uvw.exe as malicious and deletes or blocks it. Closed as duplicate, labelled external."
+   },
+   {
+    "number": 17344,
+    "reason": "Windows install blocked with a 'contains a virus or potentially unwanted software' error on a newer release. Related antivirus false-positive pattern, closed as completed and labelled external. Weaker match because it concerns uv.exe on a different version."
+   }
+  ],
+  "confidence": "medium",
+  "escalate_to_human": true,
+  "escalation_reason": "The issue raises a possible security concern: a published release binary is reported as malicious by VirusTotal. A maintainer should confirm whether this is a false positive, check the release artifact against the build, and decide whether to contact the antivirus vendors or report a false positive. The triage cannot verify the detection itself.",
+  "rationale": "The report is a Windows antivirus detection of uvw.exe 0.12, not a uv behaviour problem, so the decisive clue is the external cause. Search found #15011, the same Windows Defender false positive on uvw.exe, closed as a duplicate and labelled external. The reporter's template says bug and the report does name a release, so I kept type bug while marking it likely external. The VirusTotal links were not opened, since fetching them was out of bounds, so the detection's details are unverified. Needs_mre is false because the issue is about a vendor's detection, not a reproduction, but the antivirus name and install method are missing."
+ },
+ "21430": {
+  "type": "bug",
+  "type_differs_from_reporter": false,
+  "needs_mre": false,
+  "missing_info": [],
+  "likely_external": false,
+  "external_evidence": "",
+  "possible_duplicates": [],
+  "confidence": "medium",
+  "escalate_to_human": false,
+  "escalation_reason": "",
+  "rationale": "The reporter's template label is bug and the report describes uv behaving contrary to its intended design: uv correctly refuses to select a per-file yanked wheel for install but still writes that wheel's URL and hash into uv.lock's wheels array. The reporter traces this to PrioritizedDist::built_dist() and WheelCompatibility::is_excluded(), which only matches ExcludeNewer and not Yanked, and shows the stale entry survives --locked and --frozen. The report includes versions (uv 0.12.4), platform, a step-by-step reproduction on a devpi index, and symmetric results when the yanked file is swapped, so it is actionable without an extra MRE. The uv resolution docs read did not document yank-based exclusion from the lockfile, so I did not treat this as a config or docs issue. search_issues returned only an unrelated 2023 issue (#592, environment variable expansion), so no duplicate was found. Index-side per-file yanking is a PEP 592 feature, but the defect sits in uv's lock writer, so this is not external."
+ },
+ "20906": {
+  "type": "question",
+  "type_differs_from_reporter": true,
+  "needs_mre": false,
+  "missing_info": [],
+  "likely_external": true,
+  "external_evidence": "The report is a Kaspersky Free System Watcher behavioural detection (PDM:Trojan.Win32.Generic, reason: Behavior analysis) on an unmodified uv.exe, with the AV database release date and file MD5 given. The detection comes from the antivirus vendor's heuristics, not from uv behaviour. The reporter gives no uv-specific misbehaviour, and the detection text itself names the AV component as the source. Same class as tracking issue #20792 (labelled external, asks reporters to contact the AV/EDR vendor first).",
+  "possible_duplicates": [
+   {
+    "number": 20792,
+    "reason": "Open tracking issue (labels: area:windows, external, tracking) for Windows antivirus/EDR problems with uv; it asks users to contact their AV vendor first, which is the same situation as this report."
+   },
+   {
+    "number": 15011,
+    "reason": "Closed as duplicate: Windows Defender heuristically flags a uv binary (uvw.exe) as a threat. Same kind of antivirus false positive on a uv executable."
+   }
+  ],
+  "confidence": "medium",
+  "escalate_to_human": true,
+  "escalation_reason": "Torn between question (uv working as intended, AV vendor's false positive) and bug (reporter's template label), and the report says a signed release binary is flagged as a Trojan, which a maintainer may want to check for a real security concern (e.g. verify the release hash) before closing.",
+  "rationale": "The decisive clue is that the detection is Kaspersky System Watcher behaviour analysis on an unmodified uv.exe, with no uv misbehaviour described, so the fix belongs with the AV vendor. Following the playbook (antivirus false positives are likely_external, not uv bugs), the right response is a question pointing to the AV vendor and tracking issue #20792. Search found #20792 (AV/EDR tracking issue) and #15011 (closed duplicate for a Defender false positive). The reporter's bug label is a guess, so type_differs_from_reporter is true."
+ },
+ "20877": {
+  "type": "bug",
+  "type_differs_from_reporter": false,
+  "needs_mre": false,
+  "missing_info": [
+   "pyproject.toml showing the [project] name and the lint-format group definition",
+   "whether typed-classproperties is the root project or a path dependency listed in lint-format"
+  ],
+  "likely_external": false,
+  "external_evidence": "",
+  "possible_duplicates": [],
+  "confidence": "medium",
+  "escalate_to_human": false,
+  "escalation_reason": "",
+  "rationale": "The docs (docs/concepts/projects/sync.md) say --only-group does not include the project itself, yet the log shows uv building and installing typed-classproperties from a local file:// path under /home/runner/work/typed_classproperties/typed_classproperties, which looks like the repo checkout itself, so this is probably the root project being built against the documented behaviour. If instead it is a path dependency pulled in by the lint-format group, the build is correct and this would be a question. The hatchling build_editable failure is a symptom of the unexpected build, not the root cause. Searches found no clear duplicate; #8771 (uv run with only a dependency-group) is related but was closed as a question about running tools, not this defect."
+ },
+ "19999": {
+  "type": "enhancement",
+  "type_differs_from_reporter": true,
+  "needs_mre": false,
+  "missing_info": [],
+  "likely_external": false,
+  "external_evidence": "",
+  "possible_duplicates": [],
+  "confidence": "medium",
+  "escalate_to_human": true,
+  "escalation_reason": "Whether uv add should produce a universal lock that needs metadata for all platforms (e.g. pywin32 for win32) when resolving against an offline --find-links index is a product decision for maintainers. The inconsistent resolver message ('only pywin32<304 is available' vs 'no versions of pywin32>=304') may be a separate small bug worth a look.",
+  "rationale": "The reporter labelled this a bug, but uv add produces a universal (all-platform) lock by design, so it needs pywin32 metadata for sys_platform == 'win32' even on Linux. The offline --no-index --find-links index has no such wheel, so resolution fails. uv pip install only resolves for the current platform, which explains why it succeeds. The reproduction steps are complete, so no MRE is needed. The external-cause check is negative because the failure is in uv's resolver. Search_issues returned no matching earlier issues. search_uv_docs was rate-limited (HTTP 403) and returned no result, so the docs were not checked. The confidence is medium for that reason and because the bug-versus-enhancement call is close."
+ },
+ "21287": {
+  "type": "question",
+  "type_differs_from_reporter": false,
+  "needs_mre": false,
+  "missing_info": [],
+  "likely_external": false,
+  "external_evidence": "",
+  "possible_duplicates": [],
+  "confidence": "medium",
+  "escalate_to_human": false,
+  "escalation_reason": "",
+  "rationale": "The reporter asks how to scope a git credential helper to one project, which is a usage question rather than a defect. The uv git-credentials docs (docs/concepts/authentication/git.md) say that when no credentials are in the URL, the git credential helper is queried, and they recommend a helper or gh auth setup-git; they do not describe project-level helper config. A repo-local git config only applies when git runs inside that repository, and uv fetches git dependencies outside the project tree, so the local helper is likely never read. This last point is my inference and was not checked against uv's source. The one search hit, #1514 (URL-embedded credentials not resolving, closed), describes a different failure and is not a duplicate."
+ },
+ "20871": {
+  "type": "bug",
+  "type_differs_from_reporter": false,
+  "needs_mre": false,
+  "missing_info": [],
+  "likely_external": false,
+  "external_evidence": "",
+  "possible_duplicates": [
+   {
+    "number": 7186,
+    "reason": "Same behaviour: uvx runs in an isolated environment normally, but when invoked from a project directory the project's installed dependency version is used instead of the tool's own declared version. Issue is open and labelled needs-decision."
+   }
+  ],
+  "confidence": "medium",
+  "escalate_to_human": true,
+  "escalation_reason": "Torn between bug and question/enhancement. Reporter gives a complete reproduction on uv 0.12.1, and uvx picking up the cwd project's dependencies contradicts the isolation the reporter expects. Related issue #7186 is labelled needs-decision, so whether uvx should respect project dependencies is a product decision for maintainers.",
+  "rationale": "The reporter gives a complete, version-pinned reproduction (uv 0.12.1, RHEL9.6): the same uvx tool resolves fastapi 0.120.0 from outside a project and 0.136.0 from inside one, and --isolated does not change this. That points to uvx leaking the project environment, which is a defect rather than a config mistake, so the type is bug. The search_issues call found #7186 (uvx should use a project dependency if available), which describes the same project-environment behaviour and is labelled needs-decision. The search_uv_docs call failed with an HTTP 403 rate-limit error, so the docs were not checked. Confidence is medium because the intended behaviour is unclear and a maintainer should confirm it."
+ },
+ "21299": {
+  "type": "enhancement",
+  "type_differs_from_reporter": false,
+  "needs_mre": false,
+  "missing_info": [],
+  "likely_external": false,
+  "external_evidence": "",
+  "possible_duplicates": [],
+  "confidence": "high",
+  "escalate_to_human": true,
+  "escalation_reason": "Whether uv should add s390x and ppc64le (and manylinux variants) as --python-platform targets is a product decision for maintainers, even though the platform-tags crate already supports the architectures.",
+  "rationale": "The reporter asks for new --python-platform values (s390x-unknown-linux-gnu, powerpc64le-unknown-linux-gnu, and manylinux variants) that the CLI currently rejects. Nothing is broken: uv works as designed for the supported targets, and the request is for new behaviour, so this is an enhancement. The reporter's template label is absent, so there is no label to differ from. Two searches for python-platform and architecture-target requests found no matching duplicate; #18127 concerns platform_machine marker evaluation on cross-arch setups, a different problem. The request is well specified and needs no reproduction. Escalated because adding targets is a maintainer call."
+ },
+ "21424": {
+  "type": "bug",
+  "type_differs_from_reporter": false,
+  "needs_mre": true,
+  "missing_info": [
+   "exact uv version where the regression first appears (0.9 works, 0.11 fails; the reported version 0.12.9 differs from the 0.12 mentioned in the body)",
+   "full workspace layout: root pyproject.toml, workspace members, and where the groups 'local-spark' and extra 'databricks' are defined",
+   "exact command that produces the error (uv sync / uv lock / uv run) and the full error output",
+   "whether the root project is itself a workspace member or a virtual root"
+  ],
+  "likely_external": false,
+  "external_evidence": "",
+  "possible_duplicates": [],
+  "confidence": "low",
+  "escalate_to_human": true,
+  "escalation_reason": "Torn between bug (regression between 0.9 and 0.11, hard error on a config that previously worked) and question (uv may intentionally require a 'package' field on group conflict entries in workspaces, making this a config mistake). Whether uv should enforce that requirement is a maintainer decision.",
+  "rationale": "The reporter names a regression (works on 0.9, errors from 0.11 onward), which is a strong bug signal per the playbook. The error 'Expected package field in conflicting entry' fires on a root-level [tool.uv] conflicts entry that uses group references without a package key, so it may be intended stricter validation in workspaces rather than a defect. search_issues returned no matching duplicate. The docs on configuring projects did not cover conflicts, so the intended behaviour could not be confirmed from the docs consulted. Without the workspace layout and exact command, a maintainer cannot reproduce the inheritance claim, hence needs_mre."
+ },
+ "21773": {
+  "type": "bug",
+  "type_differs_from_reporter": false,
+  "needs_mre": false,
+  "missing_info": [
+   "Output of `uv upgrade --verbose` (or `-v`) showing the index request and the 401",
+   "Confirmation whether index-scoped credentials (UV_INDEX_PRIVATE_USERNAME / UV_INDEX_PRIVATE_PASSWORD) also fail with uv upgrade"
+  ],
+  "likely_external": false,
+  "external_evidence": "",
+  "possible_duplicates": [
+   {
+    "number": 14969,
+    "reason": "Same symptom class: a uv subcommand (uv tool upgrade) gets 401 from an Azure DevOps private index while the install/resolve path with the same credentials works. Closed as completed. Different mechanism (credentials masked in the uv-receipt), so related rather than identical."
+   },
+   {
+    "number": 18611,
+    "reason": "Same mechanism family: credentials for an explicit private index are not supplied on the 401 path for a given command. Closed as completed. The command and credential source differ (keyring-provider subprocess vs. UV_EXTRA_INDEX_URL), so this is related rather than a confirmed duplicate."
+   }
+  ],
+  "confidence": "medium",
+  "escalate_to_human": false,
+  "escalation_reason": "",
+  "rationale": "The reporter says uv sync --upgrade authenticates with the same UV_EXTRA_INDEX_URL credentials that uv upgrade ignores, and uv upgrade re-resolves dependencies, so the same credentials should apply. That points to a uv defect rather than a config mistake or a dependency constraint, so bug matches the reporter's label. The repro (pyproject, env var, commands, version, platform) is specific enough for a maintainer to act on. Search found two closed, related 401 issues (14969, 18611) but no exact duplicate. The docs search was rate-limited and the index-docs read returned 404, so the docs check for the documented env var behaviour was not completed. Confidence is medium for that reason."
+ },
+ "20850": {
+  "type": "question",
+  "type_differs_from_reporter": true,
+  "needs_mre": true,
+  "missing_info": [
+   "Full `uv add xlwings -v` (verbose) output showing the request and the 403 response headers",
+   "Whether the same wheel URL can be downloaded with the same credentials outside uv (e.g. gcloud or curl), which would separate a uv auth problem from a registry-side permission or file problem",
+   "uv index configuration in use (pyproject.toml or uv.toml index entry and the auth method, e.g. keyring or keyring provider)",
+   "Confirmation whether xlwings 0.36.10 cp313 macosx_10_12_x86_64 is actually present in the repository and whether the reporter's IAM role grants download on that repo",
+   "Clarification of the platform: reporter lists Windows, but the failing file is a macOS x86_64 wheel that uv selected for a resolution that may not match the reporter's machine"
+  ],
+  "likely_external": true,
+  "external_evidence": "Only one artifact fails (xlwings macOS wheel) while numpy from the same GCP Artifact Registry repo installs fine, and the 403 comes from the registry's download endpoint (artifacts-downloads/.../downloads/***), which is a Google Artifact Registry access or availability decision rather than uv behaviour. This points to the registry or its per-file permissions, not uv.",
+  "possible_duplicates": [
+   {
+    "number": 2025,
+    "reason": "Same symptom: uv pip install returns 403 from a private cloud-hosted PyPI-style index (S3-backed), closed as a question. Symptom match only; root cause not verified."
+   },
+   {
+    "number": 11244,
+    "reason": "Same symptom: 403 errors when uv fetches from private artifact registries via extra index URLs with JSON-key auth. Symptom match only; root cause not verified."
+   }
+  ],
+  "confidence": "medium",
+  "escalate_to_human": false,
+  "escalation_reason": "",
+  "rationale": "The reporter labels this a bug, but the decisive clue is that a single wheel returns 403 from the Google Artifact Registry download endpoint while other packages from the same repo install, which points to a registry-side permission or missing-file problem outside uv, so I classed it as a question and likely_external. The platform is also inconsistent (Windows reporter, macOS wheel) and no verbose output or credential check was given, so needs_mre is true. Search found 2025 and 11244 as 403-from-private-index symptom matches, and 16662 as a related request for clearer 403 messages. The docs search returned docs/guides/integration/google.md, which I did not open because the tool-call budget was used up."
+ },
+ "21058": {
+  "type": "bug",
+  "type_differs_from_reporter": false,
+  "needs_mre": false,
+  "missing_info": [],
+  "likely_external": false,
+  "external_evidence": "",
+  "possible_duplicates": [],
+  "confidence": "high",
+  "escalate_to_human": false,
+  "escalation_reason": "",
+  "rationale": "The reproduction is self-contained and shows the defect: uv tool list fails with 'Not a valid package or extra name: \"tool backup\"' and exit 2, while uv tool upgrade --all prints 'Nothing to upgrade' and exits 0. The reporter identifies the cause as .tools().unwrap_or_default() in the upgrade path, which turns an enumeration error into an empty set. Swallowing the error and reporting success contradicts uv's clear intended behaviour of surfacing invalid tool directory entries, so this is a bug, not a question or enhancement. Two duplicate searches (search_issues) returned no matching earlier issues. The root cause is inside uv, so not external."
+ },
+ "20336": {
+  "type": "question",
+  "type_differs_from_reporter": false,
+  "needs_mre": false,
+  "missing_info": [],
+  "likely_external": false,
+  "external_evidence": "The 404 comes from Artifactory not exposing a per-team subfolder upload endpoint on its classic PyPI API, and the 'prohibited by policy' error on the index root is an intentional Artifactory publishing policy. This is registry configuration and intended behaviour rather than a defect in another tool, so it is not classed as external.",
+  "possible_duplicates": [],
+  "confidence": "medium",
+  "escalate_to_human": true,
+  "escalation_reason": "Torn between question and enhancement: the reporter's need (publishing into a registry-specific subfolder layout that uv's publish flow does not model) could be answered by a documented --publish-url configuration, or could be a feature request for a subfolder-aware publish option. A maintainer should decide whether uv should support this.",
+  "rationale": "The reporter asks how to publish to an Artifactory subfolder with uv, and the template label is question. The search_issues tool found no earlier duplicates. The search_uv_docs call returned only doc paths (indexes.md, package.md, resolution.md) and I did not read them, so the publish-URL documentation was not checked directly. The reporter's own analysis says the subfolder endpoint returns 404 on the classic PyPI API, so the path cannot be fixed on uv's side without a registry-specific change. The report is a question about configuration, with a possible enhancement request hidden inside it."
+ },
+ "22184": {
+  "type": "bug",
+  "type_differs_from_reporter": false,
+  "needs_mre": true,
+  "missing_info": [
+   "Full unfiltered output of `uv python list` (the pasted listing shows only installed interpreters, no download entries)",
+   "Output of `uv python list --all-versions` or `uv python list cpython-3.14` on the reporter's machine",
+   "Whether the uv binary is native x86_64 or running under Rosetta 2 (uname -m / file $(which uv))",
+   "Contents of the uv configuration file that sets python-downloads = \"manual\" and any UV_PYTHON_* environment variables"
+  ],
+  "likely_external": false,
+  "external_evidence": "",
+  "possible_duplicates": [],
+  "confidence": "medium",
+  "escalate_to_human": false,
+  "escalation_reason": "",
+  "rationale": "The reporter's template says bug and the core complaint (3.14.8 absent from `uv python list` while `uv python install 3.14.8` succeeds on the same platform) is inconsistent with the documented behaviour that the listing shows the latest patch of available downloads, so it reads as a real defect, though the pasted output shows installed interpreters only and cannot prove the download entry was missing. The `uv python install 3` / `install 3.14` 'already installed' result is documented behaviour (uv verifies an existing managed install and does not upgrade patch versions), so that part is not a bug on its own. Searching issues found no matching duplicate. Docs (python-versions.md) say available Python versions are frozen per uv release and python-downloads=manual only restricts downloads to `uv python install`. A full listing and the architecture/config details are needed before a maintainer can reproduce."
+ },
+ "21083": {
+  "type": "enhancement",
+  "type_differs_from_reporter": false,
+  "needs_mre": false,
+  "missing_info": [],
+  "likely_external": false,
+  "external_evidence": "",
+  "possible_duplicates": [],
+  "confidence": "medium",
+  "escalate_to_human": true,
+  "escalation_reason": "Whether uv check should accept --no-install-project is a product decision for maintainers. The docs lookup failed (HTTP 403 rate limit), so the claim that uv check inherits uv sync project-installation behaviour is unverified.",
+  "rationale": "The reporter asks for a new flag, --no-install-project, on uv check, mirroring uv sync. That is a request for new behaviour, so enhancement, matching the reporter's label. No reproduction is needed because nothing is broken. search_issues found no true duplicate: the closest hits (#16257 editable install of the current project, #15215 Docker sync with --only-group) concern different behaviour. search_uv_docs was rate-limited and returned no content, so I could not confirm from the docs that uv check takes sync's project-install options. Confidence is medium for that reason."
+ },
+ "20571": {
+  "type": "bug",
+  "type_differs_from_reporter": false,
+  "needs_mre": false,
+  "missing_info": [],
+  "likely_external": false,
+  "external_evidence": "",
+  "possible_duplicates": [],
+  "confidence": "medium",
+  "escalate_to_human": false,
+  "escalation_reason": "",
+  "rationale": "The reporter gets uv's error 'pip-compile's `--emit-options` is unsupported (uv never emits options)', but uv does have the renamed flag `--emit-build-options` (added in #4463, linked in the report). The message's claim that uv never emits options is misleading and does not point users to the correct flag, which is a defect in uv's own output rather than a config mistake, so I classify it as a bug. No reproduction environment is needed since the message text itself is the problem. search_issues for 'emit-options' and 'emit-build-options' returned no matching duplicate issues. search_uv_docs for the flag was rate-limited on the second attempt and returned nothing, so the flag's existence rests on the reporter's link and the issue text, not on a tool-confirmed docs check. Confidence is medium because an enhancement (add a hint to the error) is a plausible alternative reading."
+ },
+ "20945": {
+  "type": "bug",
+  "type_differs_from_reporter": false,
+  "needs_mre": true,
+  "missing_info": [
+   "Full uv --verbose output for the failing run, not just the DEBUG excerpt",
+   "Contents of pyproject.toml and the src/ layout, to confirm the package name and entrypoint mapping",
+   "Whether the .pth file in .venv/lib/python3.12/site-packages is present and whether it carries the macOS hidden flag (ls -lO)",
+   "Whether the project lives in an iCloud-synced Desktop folder",
+   "Confirmation that a fresh venv outside Desktop works, to isolate the environment"
+  ],
+  "likely_external": true,
+  "external_evidence": "uv logs 'Requirement already installed: work==0.1.0 (from file:///Users/.../Desktop/work)' yet the generated .venv/bin/work script fails at 'from work import main'. This means the editable install's .pth path link is not being applied at import time, which points to Python or the OS skipping the .pth file, not uv's install step. Related issue 16977 documents Python skipping hidden .pth files on macOS, and the project sits under ~/Desktop, where iCloud sync can set the hidden flag. Not verified from the report alone.",
+  "possible_duplicates": [
+   {
+    "number": 16977,
+    "reason": "Same symptom on macOS: a local editable package becomes unimportable while uv reports it installed, attributed to Python skipping hidden .pth files, which is the likely mechanism here."
+   },
+   {
+    "number": 9902,
+    "reason": "macOS ModuleNotFoundError on 'uv run <project>' for a uv init project, tied to a venv file under iCloud-synced storage; a similar environment-level cause."
+   }
+  ],
+  "confidence": "medium",
+  "escalate_to_human": false,
+  "escalation_reason": "",
+  "rationale": "The reporter labels this a bug, and I keep the type as bug because uv reports the package as installed when the import path is broken. The decisive clue is that the install is correct per uv's own cache heuristic: the docs (cache.md) say local directory editables are only rebuilt when pyproject.toml changes, and touching the file forces a rebuild, so this matches documented behaviour. The failure lies in the .pth link not being honoured at import time, which points to macOS or Python (hidden .pth files, plausibly from the Desktop/iCloud location) rather than uv. Search found 16977 and 9902 with the same macOS ModuleNotFound pattern. Needs an MRE with verbose output and a .pth/hidden-flag check before any action."
+ },
+ "20815": {
+  "type": "bug",
+  "type_differs_from_reporter": false,
+  "needs_mre": false,
+  "missing_info": [
+   "The validation error text from the linked microsoft/winget-pkgs PR (#409107) naming the missing manifest property",
+   "Confirmation of which step generates the 0.12.0 WinGet manifest (uv release automation or an external tool)"
+  ],
+  "likely_external": true,
+  "external_evidence": "The reporter links microsoft/winget-pkgs PR 409107 and says the 0.12.0 WinGet manifest is missing a required property. `winget show` still returns 0.11.32, so the manifest was rejected or never published. The defect is in the manifest submitted to the third-party WinGet community repository, not in uv's runtime. Whether uv's release tooling generated the manifest is not shown in the report.",
+  "possible_duplicates": [],
+  "confidence": "medium",
+  "escalate_to_human": true,
+  "escalation_reason": "Torn between bug and external. The missing property is in a manifest that may be generated by uv's own release automation, which would make it a uv release bug. The fix may belong in uv's release workflow or in the winget-pkgs submission. A maintainer needs to check the PR validation error and the manifest generation path.",
+  "rationale": "The report concerns a missing required property in the WinGet manifest for uv 0.12.0, which blocks WinGet users from upgrading (winget still shows 0.11.32). It is a packaging and release defect, not a uv runtime behaviour, so the type is bug. The evidence points to the third-party winget-pkgs submission, so likely_external is true, but the generating step is unknown and could be uv's own release tooling, so a maintainer should confirm. search_issues for 'WinGet manifest uv 0.12.0' and 'winget' found no earlier report of this specific failure; the closest hits (#12211, #15011) concern different problems. No MRE is needed because the failure is reproducible from the published manifest."
+ },
+ "21392": {
+  "type": "enhancement",
+  "type_differs_from_reporter": false,
+  "needs_mre": false,
+  "missing_info": [],
+  "likely_external": false,
+  "external_evidence": "",
+  "possible_duplicates": [
+   {
+    "number": 19768,
+    "reason": "Open request to have uv run ruff check, either by extending uv check or adding a uv lint command; the body explicitly names uv lint for ruff check."
+   },
+   {
+    "number": 16314,
+    "reason": "Open request for a ruff check equivalent to uv format for ruff format, i.e. the same shorthand for linting that this issue asks for."
+   }
+  ],
+  "confidence": "high",
+  "escalate_to_human": true,
+  "escalation_reason": "Whether uv should add a lint subcommand wrapping ruff check (and how it relates to the existing uv check idea in #19768) is a product decision for maintainers.",
+  "rationale": "The reporter asks for uv to wrap ruff check as a new command, which is a feature request for behaviour uv does not currently provide, so enhancement matches the template label. No MRE is needed and nothing points at an external defect. search_issues found two open, closely overlapping requests (#19768 and #16314). The docs search returned only docs/guides/tools.md, which did not show a lint command, consistent with it not existing. Escalated because adding the command is a maintainer product decision."
+ }
+}

@@ -1,0 +1,422 @@
+{
+ "18967": {
+  "type": "enhancement",
+  "type_differs_from_reporter": false,
+  "needs_mre": false,
+  "missing_info": [],
+  "likely_external": false,
+  "external_evidence": "",
+  "possible_duplicates": [
+   {
+    "number": 10336,
+    "reason": "Earlier issue 'Sign published executables for Windows' asks for the same outcome (code-signing the Windows uv binaries); closed as completed, so this may be partly already addressed, with the remaining ask being version-info metadata."
+   }
+  ],
+  "related_issues": [
+   {
+    "number": 15011,
+    "reason": "Windows Defender false positive on uvw.exe; context for why signing is wanted, but a different request."
+   }
+  ],
+  "confidence": "medium",
+  "escalate_to_human": false,
+  "escalation_reason": "",
+  "rationale": "Reporter asks for Windows version-resource metadata (Product Name, Company) and a code-signing certificate on uv.exe; this is a request for new behaviour, so an enhancement, matching the reporter's label. Search found #10336 'Sign published executables for Windows' (closed completed), which covers the signing part; the metadata part may be new. Medium confidence because signing may already be done, which would change the framing."
+ },
+ "19282": {
+  "type": "bug",
+  "type_differs_from_reporter": false,
+  "needs_mre": false,
+  "missing_info": [],
+  "likely_external": false,
+  "external_evidence": "",
+  "possible_duplicates": [],
+  "related_issues": [],
+  "confidence": "medium",
+  "escalate_to_human": false,
+  "escalation_reason": "",
+  "rationale": "The installer's primary URL at releases.astral.sh returns 404 for 0.11.9 and the installer falls back to an alternate URL and succeeds. The reporter attributes this to Astral's release mirror/CDN, which is Astral infrastructure rather than a third party, so it is not external. It is a release/distribution defect that maintainers can check without a reproduction, so it is a bug, probably a transient publishing or mirror-sync problem. Two issue searches found no duplicates; the only hit, #5605, is a generic docs feedback tracker and unrelated."
+ },
+ "19283": {
+  "type": "bug",
+  "type_differs_from_reporter": false,
+  "needs_mre": false,
+  "missing_info": [],
+  "likely_external": false,
+  "external_evidence": "",
+  "possible_duplicates": [],
+  "related_issues": [
+   {
+    "number": 7977,
+    "reason": "Earlier closed bug about uv python install not respecting rc qualifiers (3.13.0rc3 installed rc2)."
+   },
+   {
+    "number": 16175,
+    "reason": "Pre-release/rc handling when requesting a Python version (3.14.0 resolving to rc)."
+   }
+  ],
+  "confidence": "medium",
+  "escalate_to_human": false,
+  "escalation_reason": "",
+  "rationale": "uv python list --only-downloads advertises cpython-3.14.5rc1 but uv python install rejects both 3.14.5rc1 and the full key as not a valid download request, an inconsistency with a clear command, output and version (0.11.9). Searches found no exact duplicate, only related rc-handling issues (7977, 16175). The secondary ask (also list the latest stable per minor) is a minor enhancement. Docs were not read in depth."
+ },
+ "19878": {
+  "type": "bug",
+  "type_differs_from_reporter": false,
+  "needs_mre": false,
+  "missing_info": [],
+  "likely_external": false,
+  "external_evidence": "",
+  "possible_duplicates": [],
+  "related_issues": [
+   {
+    "number": 15227,
+    "reason": "Also about uv behaviour when the project directory and the cache directory overlap (UV_CACHE_DIR inside the project), the same area as the new project-inside-cache check."
+   }
+  ],
+  "confidence": "medium",
+  "escalate_to_human": false,
+  "escalation_reason": "",
+  "rationale": "The reporter gives the exact error ('The project directory `.` is inside the cache directory'), the uv version (0.11.21), and the change that caused it (#19659, they say), and says it worked before. The wheel is built from an sdist unpacked under ~/.cache/uv/sdists-v9, so a build hook that runs `uv export` there trips the new guard. That is a regression for a plausible workflow, though the guard may be intentional and a maintainer could treat this as by-design or a question. Searches found no duplicate; #15227 is related context only. I did not read the docs and did not look up #19659 itself, so that link is unchecked."
+ },
+ "19261": {
+  "type": "question",
+  "type_differs_from_reporter": true,
+  "needs_mre": true,
+  "missing_info": [
+   "The exact uv command run (uv sync / uv pip install / uv build) and full verbose (-v) log output",
+   "Which package's build failed and whether numpy/pandas were being fetched as build requirements (build isolation) or as runtime dependencies",
+   "Full pyproject.toml (the quotes in the snippet are curly, so confirm the real file uses valid TOML) and any uv.toml/workspace config",
+   "Whether the constraint is in the root/workspace pyproject.toml or a member"
+  ],
+  "likely_external": false,
+  "external_evidence": "",
+  "possible_duplicates": [],
+  "related_issues": [
+   {
+    "number": 12441,
+    "reason": "build-constraint-dependencies not respected by uv sync; constraint-dependencies do not apply to isolated build environments, which build-constraint-dependencies covers"
+   },
+   {
+    "number": 18337,
+    "reason": "constraint-dependencies reported as ignored for a transitive dependency (closed not_planned)"
+   },
+   {
+    "number": 9508,
+    "reason": "constraint-dependencies not respected when specified outside pyproject.toml"
+   }
+  ],
+  "confidence": "low",
+  "escalate_to_human": true,
+  "escalation_reason": "low confidence (forced by guardrail)",
+  "rationale": "The report is very thin: no command, no log, no error, and the build failure is not described. A likely explanation is that the failing step is a build of a source dist where numpy/pandas are pulled as build requirements in an isolated environment; constraint-dependencies does not apply there and build-constraint-dependencies is the setting (not verified against docs, only 2 searches). Regression 0.11.3 -> 0.11.8 would make it a bug if constraints are truly ignored in normal resolution, so a maintainer must ask for the command and log first. Searches found only related, not identical, issues."
+ },
+ "19598": {
+  "type": "question",
+  "type_differs_from_reporter": true,
+  "needs_mre": false,
+  "missing_info": [],
+  "likely_external": true,
+  "external_evidence": "Reporter states Trellix Endpoint Security is blocking the uv*.exe files on install; the block is by the endpoint security product, not uv. Similar earlier reports (#17344, #1587) were antivirus false positives.",
+  "possible_duplicates": [],
+  "related_issues": [
+   {
+    "number": 17344,
+    "reason": "Windows install of uv.exe blocked by antivirus ('file contains a virus'), labelled external"
+   },
+   {
+    "number": 1587,
+    "reason": "Windows Defender flagging uv release zip as malicious, a false positive"
+   }
+  ],
+  "confidence": "medium",
+  "escalate_to_human": true,
+  "escalation_reason": "Antivirus/endpoint security flagging a fresh uv release; per playbook, treat as likely vendor false positive but escalate as a security-adjacent report. Reporter's version numbers (11.8/11.9) look like typos for 0.11.x.",
+  "rationale": "Reporter says Trellix ES blocks uv*.exe from versions after 0.11.8; no uv error or logs. Root cause is the corporate endpoint security product, not uv, so likely external; nothing for a maintainer to act on in uv beyond suggesting allowlisting or reporting a false positive to the vendor. Searches found no Trellix-specific issue, only the related antivirus false-positive reports #17344 and #1587, which are different products and not exact duplicates."
+ },
+ "19223": {
+  "type": "question",
+  "type_differs_from_reporter": true,
+  "needs_mre": false,
+  "missing_info": [],
+  "likely_external": false,
+  "external_evidence": "",
+  "possible_duplicates": [],
+  "related_issues": [],
+  "confidence": "medium",
+  "escalate_to_human": true,
+  "escalation_reason": "changes the reporter's label (bug \u2192 question)",
+  "rationale": "torch 2.11.0 metadata declares setuptools<82 (checked via get_package_metadata). With -U on both packages uv picks setuptools 82.0.1 first (the order given), and torch then has to move to a version compatible with it. That is a consequence of torch's own constraint plus -U, not a uv defect. Putting torch first, or constraining setuptools<82, avoids it. The reporter's wish to prefer downgrading setuptools could be read as an enhancement to resolver preferences, which is the plausible alternative. Two issue searches found no clear duplicate."
+ },
+ "19140": {
+  "type": "enhancement",
+  "type_differs_from_reporter": false,
+  "needs_mre": false,
+  "missing_info": [],
+  "likely_external": false,
+  "external_evidence": "",
+  "possible_duplicates": [],
+  "related_issues": [],
+  "confidence": "medium",
+  "escalate_to_human": false,
+  "escalation_reason": "",
+  "rationale": "The reporter asks for a new capability: inspect the dependency tree of a package without installing it (like pipgrip). That is a feature request, not a bug or usage confusion. Searches found no earlier issue with the same request; the results were unrelated. A maintainer might point to existing workarounds such as `uv pip compile` on a one-line requirements input, but that is a design choice, so I kept the type as enhancement. I did not read the docs, so I did not check whether an existing command already covers this."
+ },
+ "18877": {
+  "type": "enhancement",
+  "type_differs_from_reporter": false,
+  "needs_mre": false,
+  "missing_info": [],
+  "likely_external": false,
+  "external_evidence": "",
+  "possible_duplicates": [],
+  "related_issues": [
+   {
+    "number": 13633,
+    "reason": "Same request for `uv tool list --output-format=json`; sibling in the JSON-output effort, different command (list vs upgrade)."
+   },
+   {
+    "number": 10219,
+    "reason": "Earlier request for JSON output of `uv tool list`; related context for tool JSON output."
+   },
+   {
+    "number": 1442,
+    "reason": "JSON report for `uv pip install`; broader JSON-output context."
+   }
+  ],
+  "confidence": "high",
+  "escalate_to_human": false,
+  "escalation_reason": "",
+  "rationale": "Reporter asks for a new `--output-format=json` option on `uv tool upgrade`, which does not exist today; clear feature request, part of the JSON-output tracking effort (#411). Searches found no earlier issue requesting JSON output for `tool upgrade` specifically; #13633 and #10219 cover `tool list` and are related but not the same outcome. #411 and #14455 referenced in the body did not appear in search results so they are not listed."
+ },
+ "19375": {
+  "type": "enhancement",
+  "type_differs_from_reporter": true,
+  "needs_mre": false,
+  "missing_info": [],
+  "likely_external": false,
+  "external_evidence": "",
+  "possible_duplicates": [],
+  "related_issues": [
+   {
+    "number": 15254,
+    "reason": "Support for PEP 792 project status markers (quarantined/archived/deprecated); this issue asks for a clearer resolution error when a project is quarantined."
+   }
+  ],
+  "confidence": "medium",
+  "escalate_to_human": true,
+  "escalation_reason": "changes the reporter's label (bug \u2192 enhancement)",
+  "rationale": "PyPI returns an empty file list with project-status quarantined, so uv correctly reports no versions and the resolution failure is expected behavior. The reporter asks for a better, quarantine-specific error message, which is a request to change behavior (enhancement), not a defect. Search found only the PEP 792 support issue (15254, closed), which is related context rather than an identical request. The alternative reading is a bug in error reporting."
+ },
+ "19376": {
+  "type": "question",
+  "type_differs_from_reporter": true,
+  "needs_mre": true,
+  "missing_info": [
+   "Full pyproject.toml, including the [tool.uv.index] / sources config and whether the pytorch nightly index is the only index (default vs explicit)",
+   "The exact uv add command and full text error output (screenshots only), ideally with -v",
+   "Whether PyPI is also configured; with an explicit/index-only setup markupsafe may be pinned to the pytorch index, which lists it only under a different name or lacks matching wheels"
+  ],
+  "likely_external": true,
+  "external_evidence": "Reporter says the PyTorch nightly rocm7.2 index lists 'Markupsafe' (non-normalized) for 3.0.2 and lowercase 'markupsafe' from 3.0.3; uv resolves by normalized name, so the index's inconsistent naming and lack of cp312 wheels for the needed version is likely an index-side problem (or a config issue pinning markupsafe to that index). Could not verify; screenshots only.",
+  "possible_duplicates": [],
+  "related_issues": [
+   {
+    "number": 9651,
+    "reason": "Also a PyTorch nightly index resolution problem, but about downloading many torch versions, not missing markupsafe wheels."
+   }
+  ],
+  "confidence": "low",
+  "escalate_to_human": true,
+  "escalation_reason": "Report is unclear (screenshots only, reporter unsure of diagnosis); bug vs question vs external index issue are about equally plausible.",
+  "rationale": "The report is screenshot-only with no pyproject, command or text error. The reporter's own hypothesis is that the PyTorch nightly index lists markupsafe under mixed-case names and lacks matching cp312 versions, which points to an index-side or configuration issue rather than a uv defect. Searches found no duplicate; 9651 is only loosely related. I used no doc or package tools, so uv's name normalization and index-pinning behaviour were not verified."
+ },
+ "19788": {
+  "type": "question",
+  "type_differs_from_reporter": true,
+  "needs_mre": false,
+  "missing_info": [],
+  "likely_external": true,
+  "external_evidence": "uv does not build CPython; managed Pythons come from python-build-standalone, a separate project. 'No download found for request: cpython-3.14.6' means PBS has not yet published 3.14.6 builds, and uv's download metadata is updated only after a PBS release.",
+  "possible_duplicates": [],
+  "related_issues": [
+   {
+    "number": 8015,
+    "reason": "Discusses where uv sources Python distributions (python-build-standalone) and custom sources; context on the dependency on PBS."
+   }
+  ],
+  "confidence": "medium",
+  "escalate_to_human": true,
+  "escalation_reason": "changes the reporter's label (enhancement \u2192 question)",
+  "rationale": "The error is expected behavior: uv only lists Pythons that python-build-standalone has built and that uv's metadata has been updated to include. The delay in a new 3.14.6 build is outside uv's control, so the fix belongs upstream or in uv's routine metadata bump. The 'schedule uv to release' ask is not a change to uv's behavior; at most it is a request for PBS/uv release cadence, so this is a question rather than an enhancement. Searches found no clear duplicate. A maintainer could plausibly label it enhancement, hence medium confidence."
+ },
+ "19207": {
+  "type": "bug",
+  "type_differs_from_reporter": false,
+  "needs_mre": false,
+  "missing_info": [],
+  "likely_external": false,
+  "external_evidence": "",
+  "possible_duplicates": [],
+  "related_issues": [
+   {
+    "number": 18792,
+    "reason": "Also about exclude-newer-package entries and lock behaviour, but requests pruning of stale entries, not the invalidation message."
+   },
+   {
+    "number": 17999,
+    "reason": "exclude-newer-package interaction with lockfile invalidation; different symptom."
+   }
+  ],
+  "confidence": "medium",
+  "escalate_to_human": false,
+  "escalation_reason": "",
+  "rationale": "Reproducible with exact commands and uv version: when multiple --exclude-newer-package entries change, the 'Resolving despite existing lockfile' message reports only the first change. The lockfile is correct, so only the diagnostic output is incomplete; this is a small uv-side bug (could be seen as an enhancement to the message). Searches found no duplicate of this specific message issue, only loosely related exclude-newer-package issues."
+ },
+ "18851": {
+  "type": "question",
+  "type_differs_from_reporter": true,
+  "needs_mre": true,
+  "missing_info": [
+   "Text of the commands run (the report only has a screenshot), e.g. the exact uv venv / uv run / uv sync invocations",
+   "Contents of .python-version and requires-python in pyproject.toml",
+   "Output of the command that recreates the environment (including any 'Removed virtual environment' message)"
+  ],
+  "likely_external": false,
+  "external_evidence": "",
+  "possible_duplicates": [],
+  "related_issues": [
+   {
+    "number": 16958,
+    "reason": "uv venv -p3.14t followed by uv run removed and recreated the env with a different Python version; same symptom of a manually chosen venv Python being replaced"
+   },
+   {
+    "number": 15603,
+    "reason": "uv sync recreates a pre-existing venv whose Python differs from what uv selects"
+   },
+   {
+    "number": 16631,
+    "reason": "uv sync --active deleting and recreating the active venv"
+   }
+  ],
+  "confidence": "low",
+  "escalate_to_human": true,
+  "escalation_reason": "Report is only a screenshot with a vague description. It is either a question (uv venv --python does not write .python-version, so uv run/sync later re-selects Python per .python-version/requires-python and recreates the env) or a bug/enhancement if the env is recreated unexpectedly.",
+  "rationale": "The reporter sets the venv Python version, but the .python-version file is not updated, so a later uv run/sync picks a different interpreter and recreates the venv. This is most likely by-design project-environment behaviour (use uv python pin or --python consistently), so I label it a question. The body is vague, with the key evidence in an image, so a maintainer would need the commands in text. Searches found similar recreate-venv reports (16958, 15603, 16631) but none identical. I did not read a docs page in full, so confidence is low."
+ },
+ "19124": {
+  "type": "bug",
+  "type_differs_from_reporter": true,
+  "needs_mre": false,
+  "missing_info": [
+   "uv sync -v output / resolution log",
+   "DB-GPT commit or uv.lock state"
+  ],
+  "likely_external": false,
+  "external_evidence": "",
+  "possible_duplicates": [],
+  "related_issues": [
+   {
+    "number": 7004,
+    "reason": "Earlier report of uv pip install running out of memory with many dependencies (open, performance, needs-mre); similar symptom but different command."
+   }
+  ],
+  "confidence": "medium",
+  "escalate_to_human": true,
+  "escalation_reason": "changes the reporter's label (question \u2192 bug)",
+  "rationale": "Reporter labelled this a question, but uv sync growing until OOM-kill on a public workspace (DB-GPT) on 0.11.7 is a performance/memory defect rather than misuse; uv has no documented memory-limit setting that I verified (docs not searched). Searches only surfaced #7004 (OOM with uv pip install, open) as related context, not an exact duplicate. A plausible alternative is that it is a question/enhancement about limiting memory, or that the multi-index setup contributes."
+ },
+ "19811": {
+  "type": "bug",
+  "type_differs_from_reporter": false,
+  "needs_mre": false,
+  "missing_info": [],
+  "likely_external": false,
+  "external_evidence": "",
+  "possible_duplicates": [],
+  "related_issues": [],
+  "confidence": "medium",
+  "escalate_to_human": false,
+  "escalation_reason": "",
+  "rationale": "Clear repro: an empty credential.toml makes `uv auth login` fail with a TOML parse error (missing field `credential`), although the command is meant to write that file. An empty file should be treated as no credentials, so this is a bug in uv's own parsing, not external. Two issue searches found no duplicate; the results were unrelated private-git credential issues. I did not check the docs, so the intended behaviour for an empty file is inferred; some maintainers could treat it as an enhancement."
+ },
+ "19918": {
+  "type": "enhancement",
+  "type_differs_from_reporter": false,
+  "needs_mre": false,
+  "missing_info": [],
+  "likely_external": false,
+  "external_evidence": "",
+  "possible_duplicates": [
+   {
+    "number": 5903,
+    "reason": "Open tracking issue (enhancement, needs-design) requesting a built-in task runner via uv run with scripts defined in pyproject.toml; same requested outcome as project-local task aliases."
+   }
+  ],
+  "related_issues": [],
+  "confidence": "medium",
+  "escalate_to_human": false,
+  "escalation_reason": "",
+  "rationale": "The issue body was deleted, so only the title is available: a request for project-local task aliases in pyproject.toml. That is a feature request for a task runner. Searches surfaced the open canonical issue #5903 'Using uv run as a task runner', which has the same outcome. Confidence is medium because the body is missing and the exact proposal could not be checked."
+ },
+ "18862": {
+  "type": "bug",
+  "type_differs_from_reporter": false,
+  "needs_mre": false,
+  "missing_info": [],
+  "likely_external": false,
+  "external_evidence": "",
+  "possible_duplicates": [],
+  "related_issues": [
+   {
+    "number": 17437,
+    "reason": "Asks how to request the GIL build; uv picks the free-threaded one for a plain 3.14 request"
+   },
+   {
+    "number": 16722,
+    "reason": "uv prefers free-threaded Python over non-free-threaded for a plain 3.14 request in discovery"
+   },
+   {
+    "number": 13361,
+    "reason": "Free-threaded interpreter selection surprising/inconsistent between commands"
+   }
+  ],
+  "confidence": "medium",
+  "escalate_to_human": false,
+  "escalation_reason": "",
+  "rationale": "Verbose logs show that after `uv run --python 3.14t` recreated .venv with the free-threaded interpreter, `uv run --python 3.14` reports 'project environment's Python version satisfies the request: Python 3.14' and reuses the free-threaded venv, so the request cannot select the GIL build and the output is wrong. Full commands, logs and version are present, so no MRE is needed. This may be partly by-design (an unqualified request matches any variant), but the venv reuse makes it look like a bug. Searches found only related free-threaded selection issues (17437, 16722, 13361), not an exact duplicate. No docs checked."
+ },
+ "19372": {
+  "type": "bug",
+  "type_differs_from_reporter": false,
+  "needs_mre": false,
+  "missing_info": [],
+  "likely_external": false,
+  "external_evidence": "",
+  "possible_duplicates": [],
+  "related_issues": [],
+  "confidence": "medium",
+  "escalate_to_human": false,
+  "escalation_reason": "",
+  "rationale": "Reporter gives a full pyproject, commands, outputs and uv version. `uv lock` honors required-environments (fails as documented) while `uv pip compile --universal` silently ignores it, though it honors `environments`. Docs describe required-environments as a general resolution setting; a maintainer could alternatively say it is not supported in the pip interface (enhancement/docs). Searches found no prior issue on this; I did not read the settings docs page in detail."
+ },
+ "19508": {
+  "type": "enhancement",
+  "type_differs_from_reporter": true,
+  "needs_mre": false,
+  "missing_info": [],
+  "likely_external": false,
+  "external_evidence": "",
+  "possible_duplicates": [],
+  "related_issues": [
+   {
+    "number": 14885,
+    "reason": "Also about a package release landing mid-run causing inconsistent resolution; different symptom (install vs lock snapshot) and different requested outcome."
+   }
+  ],
+  "confidence": "medium",
+  "escalate_to_human": true,
+  "escalation_reason": "changes the reporter's label (bug \u2192 enhancement)",
+  "rationale": "uv locked the wheels visible on the index at that moment, which is by design; the partial upload is a race with the upstream publisher. The reporter already found the existing mitigations (`uv lock --upgrade-package`, `required-environments`) and asks for a new heuristic warning when the wheel count drops versus the previous release, so this is an enhancement, not a bug. Searches found no exact duplicate; #14885 (cited by the reporter, seen in search) is related context only. Alternative reading: a maintainer could call it likely_external to greenlet's staggered upload, but the request is for uv behaviour."
+ }
+}

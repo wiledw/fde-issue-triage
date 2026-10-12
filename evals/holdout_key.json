@@ -1,0 +1,219 @@
+[
+ {
+  "issue": 20768,
+  "category": "confirmed-enhancement",
+  "reporter_label": "enhancement",
+  "type": "enhancement",
+  "flags": [],
+  "duplicate_of": null,
+  "maintainer_first_reply": "I think we're not opposed in principle to flattening this archive, but I imagine a lot of downstreams (who we don't have insight/visibility into) are already handling the current structure, so changing it up on them has the potential to be ",
+  "title": "Publish flat uv release archives on all platforms (no top-level directory)"
+ },
+ {
+  "issue": 20854,
+  "category": "bug->question",
+  "reporter_label": "bug",
+  "type": "question",
+  "flags": [
+   "duplicate"
+  ],
+  "duplicate_of": 20792,
+  "maintainer_first_reply": "Please see astral-sh/uv#20792 \u2014 these are false positives for new releases.",
+  "title": "uvw.exe  0.12 version is marked as malicious by antimalware checkers"
+ },
+ {
+  "issue": 21430,
+  "category": "bug->enhancement",
+  "reporter_label": "bug",
+  "type": "enhancement",
+  "flags": [],
+  "duplicate_of": null,
+  "maintainer_first_reply": "Thanks for the report! I don't know if I'd consider this a bug, given the guarantees we provide about the contents of `uv.lock` (none, AFAIK). But I agree it could be better :)",
+  "title": "Yanked wheel is retained in `uv.lock` even when a non-yanked wheel exists for the same version"
+ },
+ {
+  "issue": 20906,
+  "category": "bug->question",
+  "reporter_label": "bug",
+  "type": "question",
+  "flags": [
+   "duplicate",
+   "external"
+  ],
+  "duplicate_of": 15011,
+  "maintainer_first_reply": "Hi @Artaherzadeh, could you please raise this with your support/commercial representative for Kaspersky? On the uv side we don't have the ability to prevent AV/EDR vendors from introducing false positives.",
+  "title": "Kaspersky System Watcher flags uv.exe as PDM:Trojan.Win32.Generic"
+ },
+ {
+  "issue": 20877,
+  "category": "confirmed-bug",
+  "reporter_label": "bug",
+  "type": "bug",
+  "flags": [],
+  "duplicate_of": null,
+  "maintainer_first_reply": "Thanks for following up!",
+  "title": "`uv sync --only-group lint-format` is still building & installing local project"
+ },
+ {
+  "issue": 19999,
+  "category": "bug->question",
+  "reporter_label": "bug",
+  "type": "question",
+  "flags": [],
+  "duplicate_of": null,
+  "maintainer_first_reply": "I think this is broadly intentional. `uv add` does a [universal resolution](https://docs.astral.sh/uv/concepts/resolution/#universal-resolution), so it doesn't special-case the current platform in any way -- it solves in the same way regard",
+  "title": "uv add --no-index --find-links fails to resolve platform-specific dependencies that are not required on the current platform"
+ },
+ {
+  "issue": 21287,
+  "category": "duplicate",
+  "reporter_label": "question",
+  "type": "question",
+  "flags": [
+   "duplicate"
+  ],
+  "duplicate_of": 8441,
+  "maintainer_first_reply": "This shares the root cause of #8441.",
+  "title": "Having a git credentials helper configured per-project (not globally) for `uv` to use"
+ },
+ {
+  "issue": 20871,
+  "category": "needs-mre",
+  "reporter_label": "bug",
+  "type": null,
+  "flags": [
+   "needs-mre"
+  ],
+  "duplicate_of": null,
+  "maintainer_first_reply": "This doesn't sound like the expected behavior and isn't reproducible in a trivial example. Do you have `PYTHONPATH` set? What Python executable is being used?",
+  "title": "uvx should not use the project's dependencies"
+ },
+ {
+  "issue": 21299,
+  "category": "confirmed-enhancement",
+  "reporter_label": null,
+  "type": "enhancement",
+  "flags": [],
+  "duplicate_of": null,
+  "maintainer_first_reply": "I think this is reasonable.",
+  "title": "Request to add s390x and ppc64le as `--python-platform` targets"
+ },
+ {
+  "issue": 21424,
+  "category": "bug->question",
+  "reporter_label": "bug",
+  "type": "question",
+  "flags": [],
+  "duplicate_of": null,
+  "maintainer_first_reply": "uv 0.11.4 started actually reading that `conflicts` field in the root pyproject. Previous versions of uv simply ignored it (assuming you don't have a `[project]` entry in there).  The error message is correct though. You can simply specify ",
+  "title": "Regression: conflicts definition in root project are not inherited"
+ },
+ {
+  "issue": 21773,
+  "category": "confirmed-bug",
+  "reporter_label": "bug",
+  "type": "bug",
+  "flags": [],
+  "duplicate_of": null,
+  "maintainer_first_reply": "Thanks for the report! This indeed looks like a bug",
+  "title": "uv upgrade cannot authenticate while uv sync --upgrade does"
+ },
+ {
+  "issue": 20850,
+  "category": "needs-mre",
+  "reporter_label": "bug",
+  "type": "bug",
+  "flags": [
+   "needs-mre"
+  ],
+  "duplicate_of": null,
+  "maintainer_first_reply": "Can you share more information about how you're authenticating to the registry? Are you using the [Google integration](https://docs.astral.sh/uv/guides/integration/google/), or something else?  ",
+  "title": "uv add from GCP artifact registry returning HTTP status client error (403 Forbidden)"
+ },
+ {
+  "issue": 21058,
+  "category": "confirmed-bug",
+  "reporter_label": "bug",
+  "type": "bug",
+  "flags": [],
+  "duplicate_of": null,
+  "maintainer_first_reply": "It seems worth looking at propagating the error, yeah.",
+  "title": "`uv tool upgrade --all` reports `Nothing to upgrade` when tool enumeration fails"
+ },
+ {
+  "issue": 20336,
+  "category": "external",
+  "reporter_label": "question",
+  "type": null,
+  "flags": [
+   "external"
+  ],
+  "duplicate_of": null,
+  "maintainer_first_reply": "This sounds like a deficiency in Artifactory: based on that link they're not using PyPI's upload API for their \"subfolder\" concept:  > When attempting to upload specific PyPI packages to designated subfolders for permission control and orga",
+  "title": "Publishing package to Artifactory subfolder"
+ },
+ {
+  "issue": 22184,
+  "category": "bug->enhancement",
+  "reporter_label": "bug",
+  "type": "enhancement",
+  "flags": [],
+  "duplicate_of": null,
+  "maintainer_first_reply": "`uv python list` is intended to show installed versions and when you have automatic downloads enabled we show the downloadable versions since they are transparently available. I think it's as-designed that `--only-downloads` opts you in to ",
+  "title": "Python 3.14.8 missing from `uv python list` on x86_64 macOS with `python-downloads = \"manual\"`"
+ },
+ {
+  "issue": 21083,
+  "category": "confirmed-enhancement",
+  "reporter_label": "enhancement",
+  "type": "enhancement",
+  "flags": [],
+  "duplicate_of": null,
+  "maintainer_first_reply": "Hm, interesting use case, thanks for sharing.  It seems like we should do something for this, though I'm unsure if `--no-install-project` is quite right. I wonder if we can find some way to express in configuration that your project has stu",
+  "title": "uv check --no-install-project"
+ },
+ {
+  "issue": 20571,
+  "category": "confirmed-bug",
+  "reporter_label": null,
+  "type": "bug",
+  "flags": [],
+  "duplicate_of": null,
+  "maintainer_first_reply": "Lol, thanks",
+  "title": "Misleading message when trying to use `--emit-options`"
+ },
+ {
+  "issue": 20945,
+  "category": "confirmed-bug",
+  "reporter_label": "bug",
+  "type": "bug",
+  "flags": [],
+  "duplicate_of": null,
+  "maintainer_first_reply": "Opened PR #20954 with a fix: uv now verifies that the .pth files recorded in the editable install RECORD are still present, and repairs the install (re-syncs) when one is missing.",
+  "title": "ModuleNotFound when run 'uv run <project_name>' in mac"
+ },
+ {
+  "issue": 20815,
+  "category": "external",
+  "reporter_label": "bug",
+  "type": null,
+  "flags": [
+   "external"
+  ],
+  "duplicate_of": null,
+  "maintainer_first_reply": "@MatthijsKok We don't maintain the WinGet distribution, so I think this needs to be addressed downstream.  From looking at https://github.com/microsoft/winget-pkgs/pull/409107 it looks like the downstream's automation didn't pick up the 0.1",
+  "title": "WinGet manifest for 0.12.0 missing property preventing release"
+ },
+ {
+  "issue": 21392,
+  "category": "duplicate",
+  "reporter_label": "enhancement",
+  "type": "enhancement",
+  "flags": [
+   "duplicate"
+  ],
+  "duplicate_of": 16314,
+  "maintainer_first_reply": "It's not set in stone yet, but I'd rather see `uv check` gain the ability to run both `ruff check` and `ty check` and combine the results.  With that in mind, I'm going to close this as a duplicate of #16314.",
+  "title": "support `uv lint` command to run `ruff check`"
+ }
+]

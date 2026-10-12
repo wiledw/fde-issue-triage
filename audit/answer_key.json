@@ -1,0 +1,12 @@
+[
+  {"issue": 21824, "reporter_label": "bug", "type": "bug", "flags": ["external"], "why": "Root cause was hatchling emitting malformed metadata, not uv."},
+  {"issue": 22111, "reporter_label": "bug", "type": "question", "flags": [], "why": "User config typo: [tools.uv] should be [tool.uv]."},
+  {"issue": 21694, "reporter_label": "bug", "type": "bug", "flags": [], "why": "Real regression in 0.12.14, fixed in 0.12.15."},
+  {"issue": 20931, "reporter_label": "bug", "type": "bug", "flags": ["duplicate"], "duplicate_of": 3636, "why": "Known unsupported case already tracked in #3636."},
+  {"issue": 21972, "reporter_label": "bug", "type": "question", "flags": [], "why": "Wrong flag: --locked still validates; --frozen is what they wanted."},
+  {"issue": 22006, "reporter_label": "bug", "type": "enhancement", "flags": [], "why": "Working as designed; atomic reinstall is a feature request."},
+  {"issue": 21641, "reporter_label": "bug", "type": null, "flags": ["needs-mre"], "why": "Maintainer couldn't reproduce; suspected local antivirus."},
+  {"issue": 21122, "reporter_label": null, "type": "enhancement", "flags": [], "why": "Sounds like a bug, but hashes were deliberately deferred; accepted as a feature."},
+  {"issue": 21273, "reporter_label": "bug", "type": "question", "flags": [], "why": "Correct behaviour: pyramid pins setuptools<82."},
+  {"issue": 22262, "reporter_label": "bug", "type": "bug", "flags": [], "why": "Confirmed bug, fixed."}
+]

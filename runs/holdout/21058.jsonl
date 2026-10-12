@@ -1,0 +1,4 @@
+{"ts": "2026-10-12T12:04:42.483Z", "run_id": "21058", "seq": 1, "event": "tool_call", "name": "search_issues", "input": {"query": "tool upgrade --all Nothing to upgrade unwrap_or_default"}}
+{"ts": "2026-10-12T12:04:42.484Z", "run_id": "21058", "seq": 2, "event": "tool_result", "is_error": false, "content": "No matching earlier issues.", "seen_issue_numbers": []}
+{"ts": "2026-10-12T12:04:45.915Z", "run_id": "21058", "seq": 1, "event": "tool_call", "name": "search_issues", "input": {"query": "uv tool upgrade --all silently ignores errors in tool directory"}}
+{"ts": "2026-10-12T12:04:45.915Z", "run_id": "21058", "seq": 2, "event": "tool_result", "is_error": false, "content": "No matching earlier issues.", "seen_issue_numbers": []}

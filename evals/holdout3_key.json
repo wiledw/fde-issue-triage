@@ -1,0 +1,214 @@
+[
+ {
+  "issue": 18967,
+  "category": "duplicate",
+  "reporter_label": "enhancement",
+  "type": "enhancement",
+  "flags": [
+   "duplicate"
+  ],
+  "duplicate_of": 10336,
+  "maintainer_first_reply": "Please see https://github.com/astral-sh/uv/issues/10336",
+  "title": "Add Windows executable Metadata and Code Signing to uv.exe"
+ },
+ {
+  "issue": 19282,
+  "category": "confirmed-bug",
+  "reporter_label": "bug",
+  "type": "bug",
+  "flags": [],
+  "duplicate_of": null,
+  "maintainer_first_reply": "Thanks for the report! This should be fixed in the next 5 or so minutes",
+  "title": "Bug: Primary download URL returns 404 for uv 0.11.9 on x86_64 Linux"
+ },
+ {
+  "issue": 19283,
+  "category": "confirmed-bug",
+  "reporter_label": "bug",
+  "type": "bug",
+  "flags": [],
+  "duplicate_of": null,
+  "maintainer_first_reply": "Thanks for the report! Unfortunately uv assumed Python pre-releases could only occur for `0` patch releases.  You can still get the version with  ``` uv python install 3.14rc2   # Install an old pre-release so you're opted into them uv pyth",
+  "title": "Unable to download version 3.14.5rc1 from latest uv"
+ },
+ {
+  "issue": 19878,
+  "category": "confirmed-bug",
+  "reporter_label": "bug",
+  "type": "bug",
+  "flags": [],
+  "duplicate_of": null,
+  "maintainer_first_reply": "Thanks for the report! We'll look into it.",
+  "title": "Hatchling build hooks fail due to #19659"
+ },
+ {
+  "issue": 19261,
+  "category": "needs-mre",
+  "reporter_label": "bug",
+  "type": null,
+  "flags": [
+   "needs-mre"
+  ],
+  "duplicate_of": null,
+  "maintainer_first_reply": "Can you provide a complete, minimal reproduction for us to help resolve this?",
+  "title": "[tool.uv] `constraint-dependencies` not respected"
+ },
+ {
+  "issue": 19598,
+  "category": "external",
+  "reporter_label": "bug",
+  "type": "bug",
+  "flags": [
+   "external"
+  ],
+  "duplicate_of": null,
+  "maintainer_first_reply": "I'd recommend reporting it as a false positive to them. Alas there's very little we can do here. Usually the security scanning tools catch up after a little bit.",
+  "title": "Trellix Endpoint Security blocking install of 11.9+"
+ },
+ {
+  "issue": 19223,
+  "category": "bug->question",
+  "reporter_label": "bug",
+  "type": "question",
+  "flags": [],
+  "duplicate_of": null,
+  "maintainer_first_reply": "Hi @QiE2035, thanks for the report. I believe this falls into the general category of subjectively suboptimal resolutions. In general uv has no way to pick the \"best\" resolution for all possible users, since some users may want the opposite",
+  "title": "Downgrade torch when install sam2"
+ },
+ {
+  "issue": 19140,
+  "category": "confirmed-enhancement",
+  "reporter_label": "enhancement",
+  "type": "enhancement",
+  "flags": [],
+  "duplicate_of": null,
+  "maintainer_first_reply": "Hi @Mingliang-Liu, thank you for opening an issue.  The underlying problem here is that Python doesn't actually have a concept of \"querying dependencies\" that's separate from installing them, at least in the general case: if your resolution",
+  "title": "Feature Request: Support querying dependencies of uninstalled packages"
+ },
+ {
+  "issue": 18877,
+  "category": "confirmed-enhancement",
+  "reporter_label": "enhancement",
+  "type": "enhancement",
+  "flags": [],
+  "duplicate_of": null,
+  "maintainer_first_reply": "I'm currently working on this one",
+  "title": "Support `tool upgrade --output-format=json`"
+ },
+ {
+  "issue": 19375,
+  "category": "bug->enhancement",
+  "reporter_label": "bug",
+  "type": "enhancement",
+  "flags": [],
+  "duplicate_of": null,
+  "maintainer_first_reply": "When it's quarantined, I think the index just omits it entirely from its response?",
+  "title": "`uv lock` error message is unclear when dependencies are quarantined"
+ },
+ {
+  "issue": 19376,
+  "category": "bug->question",
+  "reporter_label": "bug",
+  "type": "question",
+  "flags": [],
+  "duplicate_of": null,
+  "maintainer_first_reply": "Hmm, I don't think that's a bug in uv: you're explicitly asking for `markupsafe==3.0.3` on Python 3.12, but the index you've specified doesn't have a wheel for that Python version. Per that link, the only wheel builds for `markupsafe==3.0.3",
+  "title": "uv add does not fullfill older package dependencies with name changed package"
+ },
+ {
+  "issue": 19788,
+  "category": "confirmed-enhancement",
+  "reporter_label": "enhancement",
+  "type": "enhancement",
+  "flags": [],
+  "duplicate_of": null,
+  "maintainer_first_reply": "https://github.com/astral-sh/uv/pull/19787 merged support, and 0.11.21 now includes the latest releases",
+  "title": "schedule uv to release with python releases"
+ },
+ {
+  "issue": 19207,
+  "category": "bug->enhancement",
+  "reporter_label": "bug",
+  "type": "enhancement",
+  "flags": [],
+  "duplicate_of": null,
+  "maintainer_first_reply": "It's plausible for us to enumerate all of the changes here but I'm not sure why we should. If any single change has occurred, we need to resolve again. The goal is not for this message to enumerate all changes incompatible with the lockfile",
+  "title": "`uv lock --exclude-newer-package` only reports the first changed package in the lockfile-invalidation message"
+ },
+ {
+  "issue": 18851,
+  "category": "bug->question",
+  "reporter_label": "bug",
+  "type": "question",
+  "flags": [],
+  "duplicate_of": null,
+  "maintainer_first_reply": "I think you should be using `uv python pin` to pin the active Python version. Using `uv venv` with the project APIs (like `uv run`) isn't recommended, since `uv run` should be managing the environment for you.",
+  "title": "uv set venv python version to existing environment, and won't work"
+ },
+ {
+  "issue": 19124,
+  "category": "needs-mre",
+  "reporter_label": "question",
+  "type": "question",
+  "flags": [
+   "needs-mre"
+  ],
+  "duplicate_of": null,
+  "maintainer_first_reply": "Can you provide more details please? e.g., verbose logs?  I would not expect uv to ever consume that much memory. I assume there's a package build happening?",
+  "title": "uv sync memory usage grows until OOM on large workspace; can memory usage be limited?"
+ },
+ {
+  "issue": 19811,
+  "category": "confirmed-bug",
+  "reporter_label": "bug",
+  "type": "bug",
+  "flags": [],
+  "duplicate_of": null,
+  "maintainer_first_reply": "Why would it be existing but empty?",
+  "title": "If `credential.toml` is empty, `uv` returns a TOML parsing error"
+ },
+ {
+  "issue": 19918,
+  "category": "duplicate",
+  "reporter_label": "enhancement",
+  "type": "enhancement",
+  "flags": [
+   "duplicate"
+  ],
+  "duplicate_of": 5903,
+  "maintainer_first_reply": "Duplicate of https://github.com/astral-sh/uv/issues/5903",
+  "title": "Support project-local task aliases in pyproject.toml"
+ },
+ {
+  "issue": 18862,
+  "category": "bug->question",
+  "reporter_label": "bug",
+  "type": "question",
+  "flags": [],
+  "duplicate_of": null,
+  "maintainer_first_reply": "A request for `3.14` does not have a preference for a GIL or no-GIL interpreter. Once you've created an environment, we'll keep using it. You can request `3.14+gil` to deny free-threaded interpreters.",
+  "title": "Error selecting between GIL and no-GIL interpreter"
+ },
+ {
+  "issue": 19372,
+  "category": "confirmed-bug",
+  "reporter_label": "bug",
+  "type": "bug",
+  "flags": [],
+  "duplicate_of": null,
+  "maintainer_first_reply": "I believe it's intentional that the setting only applies to `uv lock`. Could you use `uv lock` and `uv export` instead?  We might want to expand the scope for the setting though, cc @charliermarsh \u2014 I expect it could be breaking?",
+  "title": "`uv pip compile` ignores `required-environments`"
+ },
+ {
+  "issue": 19508,
+  "category": "external",
+  "reporter_label": "bug",
+  "type": "bug",
+  "flags": [
+   "external"
+  ],
+  "duplicate_of": null,
+  "maintainer_first_reply": "The fix for this is https://peps.python.org/pep-0694/  Unfortunately, there's not a great way for us to tell when this is happening in a generalizable form.",
+  "title": "`uv lock` pins single-platform wheel when upstream's release is mid-upload, then breaks at `uv sync` with misleading `only has wheels with the following Python ABI tag` warning"
+ }
+]

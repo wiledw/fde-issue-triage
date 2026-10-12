@@ -1,0 +1,217 @@
+[
+ {
+  "issue": 21009,
+  "category": "duplicate",
+  "reporter_label": "enhancement",
+  "type": "bug",
+  "flags": [
+   "duplicate"
+  ],
+  "duplicate_of": 19832,
+  "maintainer_first_reply": "I think `uv lock` should just not fail if the environment is invalid. I don't think we should add an `--active` flag to it.",
+  "title": "Add `--active` flag for `uv lock`"
+ },
+ {
+  "issue": 20102,
+  "category": "bug->question",
+  "reporter_label": "bug",
+  "type": "question",
+  "flags": [],
+  "duplicate_of": null,
+  "maintainer_first_reply": "It looks like you have a `.venv` in a parent directory that uses Python 3.13, so it's discovering that and assuming that's the \"current\" Python version.",
+  "title": "`uv pip compile --universal` does not use the correct lower bound"
+ },
+ {
+  "issue": 20875,
+  "category": "bug->enhancement",
+  "reporter_label": "bug",
+  "type": "enhancement",
+  "flags": [],
+  "duplicate_of": null,
+  "maintainer_first_reply": "Thanks for the report, we'll look into a solution here.",
+  "title": "Cannot opt into prerelease build requirements in uv 0.12"
+ },
+ {
+  "issue": 20917,
+  "category": "bug->enhancement",
+  "reporter_label": "bug",
+  "type": "enhancement",
+  "flags": [],
+  "duplicate_of": null,
+  "maintainer_first_reply": "Hm, the former behavior you're describing does not match my understanding of what should have been happening. If we were merging those groups, that sounds like a bug? ",
+  "title": "workspace groups no longer additive for members"
+ },
+ {
+  "issue": 21635,
+  "category": "external",
+  "reporter_label": "enhancement",
+  "type": null,
+  "flags": [
+   "external"
+  ],
+  "duplicate_of": null,
+  "maintainer_first_reply": "What is the error? How would you expect it to be supported?",
+  "title": "Support org formatted README by default"
+ },
+ {
+  "issue": 21576,
+  "category": "needs-mre",
+  "reporter_label": "bug",
+  "type": null,
+  "flags": [
+   "needs-mre"
+  ],
+  "duplicate_of": null,
+  "maintainer_first_reply": "If you want to pin, I recommend pinning against released versions. `0.12.12` was the latest published tag, you could go back to `0.12.11`",
+  "title": "ghcr.io/astral-sh/uv:latest causing Docker build failure"
+ },
+ {
+  "issue": 21747,
+  "category": "bug->question",
+  "reporter_label": "bug",
+  "type": "question",
+  "flags": [],
+  "duplicate_of": null,
+  "maintainer_first_reply": "`--frozen`'s effect is that archives are downloaded from locations captured in `uv.lock` - if you want to use your own index, you'll have to apply these env vars while `uv.lock` is being produced. Alternatively, you can wait for https://git",
+  "title": "frozen block UV_DEFAULT_INDEX and UV_INDEX_STRATEGY"
+ },
+ {
+  "issue": 20983,
+  "category": "confirmed-enhancement",
+  "reporter_label": "enhancement",
+  "type": "enhancement",
+  "flags": [],
+  "duplicate_of": null,
+  "maintainer_first_reply": "Hi @Bengt, thanks for opening an issue.  To make sure I'm understanding the request: `--ignore-until-fixed=ALL` would ignore all findings that don't have fixes yet? Is that what you're envisioning?  My first thought is that this is a risky ",
+  "title": "uv audit --ignore-until-fixed=ALL"
+ },
+ {
+  "issue": 20567,
+  "category": "duplicate",
+  "reporter_label": "bug",
+  "type": null,
+  "flags": [
+   "duplicate",
+   "external"
+  ],
+  "duplicate_of": 9543,
+  "maintainer_first_reply": "I\u2019m not completely opposed to implementing workarounds like these, but it seems fairly clear that this issue originates in the endpoint security tool, rather than uv. It's ultimately the responsibility of these tools to achieve their goals ",
+  "title": "uv venv: Windows PE resource error due to Bitdefender Incident Sensor"
+ },
+ {
+  "issue": 20996,
+  "category": "bug->question",
+  "reporter_label": null,
+  "type": "question",
+  "flags": [
+   "external"
+  ],
+  "duplicate_of": null,
+  "maintainer_first_reply": "What commands did you run? What version of redis is in `uv.lock`?",
+  "title": "Unable to install `redis[hiredis]` correctly"
+ },
+ {
+  "issue": 21743,
+  "category": "external",
+  "reporter_label": "bug",
+  "type": null,
+  "flags": [
+   "external"
+  ],
+  "duplicate_of": null,
+  "maintainer_first_reply": "I think you copy pasted the summary straight from an LLM, please don't do that.  As for resolving this, there's a workaround, it doesn't seem to have security impact, and there's a fixed version. We will just look into bumping this. It will",
+  "title": "Intermittent SIGABRT on aarch64 (GCP Axion / AWS Graviton) during package downloads - AWS-LC RNDR no-retry"
+ },
+ {
+  "issue": 20050,
+  "category": "confirmed-bug",
+  "reporter_label": "bug",
+  "type": "bug",
+  "flags": [],
+  "duplicate_of": null,
+  "maintainer_first_reply": "Agh, I just ran into this as well and its a full blocker for caching. Gitlab's caching requires that the folder must be inside the project directory.  Command that fails:  ``` $ uv build error: The cache directory `.uv-cache` is inside the ",
+  "title": "uv build fails on GitLab where cache directory is in source directory"
+ },
+ {
+  "issue": 21337,
+  "category": "confirmed-bug",
+  "reporter_label": "bug",
+  "type": "bug",
+  "flags": [],
+  "duplicate_of": null,
+  "maintainer_first_reply": "Could you please provide the full output? The report above does not include the Rust panic message or traceback frames.  ",
+  "title": "uvx crashes with SIGABRT / abort() on macOS when launched non-interactively via subprocess stdio piping"
+ },
+ {
+  "issue": 19988,
+  "category": "confirmed-bug",
+  "reporter_label": "bug",
+  "type": "bug",
+  "flags": [],
+  "duplicate_of": null,
+  "maintainer_first_reply": "I have to look when I\u2019m at my desk but this is technically correct\u2026 for local versions, you\u2019re supposed to sort lexicographically. I have to imagine it\u2019s a mistake that it was included on the index?  You can likely fix this by setting requi",
+  "title": "uv resolves torchvision to 0.27.1+df56172 on Linux from the PyTorch CPU index"
+ },
+ {
+  "issue": 20613,
+  "category": "confirmed-enhancement",
+  "reporter_label": "enhancement",
+  "type": "enhancement",
+  "flags": [],
+  "duplicate_of": null,
+  "maintainer_first_reply": "Isn't this already implemented, just with different syntax?  https://docs.astral.sh/uv/guides/scripts/#declaring-script-dependencies",
+  "title": "Add support for single-file environment"
+ },
+ {
+  "issue": 20984,
+  "category": "confirmed-enhancement",
+  "reporter_label": "enhancement",
+  "type": "enhancement",
+  "flags": [],
+  "duplicate_of": null,
+  "maintainer_first_reply": "Seems reasonable to me \ud83d\ude42. IMO it's probably fine to change without treating as breaking, per your point about it being in preview, but others may disagree.  (Another option, although maybe not a good one: we could test `isatty` and speciali",
+  "title": "Make `uv cache size` human readable by default"
+ },
+ {
+  "issue": 21096,
+  "category": "confirmed-bug",
+  "reporter_label": "bug",
+  "type": "bug",
+  "flags": [],
+  "duplicate_of": null,
+  "maintainer_first_reply": "Thanks for the report",
+  "title": "Relative indexes in PEP 723 scripts are resolved against the current working directory"
+ },
+ {
+  "issue": 20994,
+  "category": "needs-mre",
+  "reporter_label": "question",
+  "type": null,
+  "flags": [
+   "needs-mre"
+  ],
+  "duplicate_of": null,
+  "maintainer_first_reply": "Can you share a full example and/or verbose logs that show how `future` is selected?",
+  "title": "uv add --extra installs from pypi if dependency group is labelled like a public package"
+ },
+ {
+  "issue": 21857,
+  "category": "confirmed-bug",
+  "reporter_label": "bug",
+  "type": "bug",
+  "flags": [],
+  "duplicate_of": null,
+  "maintainer_first_reply": "Hey, put together a fix for this in uv-git by checking symlink_metadata in is_fresh and unlinking any repo-tracked .ok entry prior to paths::create. Opened a PR here at. https://github.com/astral-sh/uv/pull/21892",
+  "title": "uv Git checkout marker follows a repository-controlled symlink"
+ },
+ {
+  "issue": 21065,
+  "category": "bug->question",
+  "reporter_label": "bug",
+  "type": "question",
+  "flags": [],
+  "duplicate_of": null,
+  "maintainer_first_reply": "As of uv 0.12, we always rewrite the `pyproject.toml` for consistency, even if you're only using TOML 1.0 syntax.",
+  "title": "author field in pyproject.toml is being interpret as TOML 1.1 by uv build"
+ }
+]

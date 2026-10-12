@@ -1,0 +1,25 @@
+{
+  "type": "bug",
+  "type_differs_from_reporter": false,
+  "needs_mre": false,
+  "missing_info": [
+    "Output of `uv upgrade --verbose` (or `-v`) showing the index request and the 401",
+    "Confirmation whether index-scoped credentials (UV_INDEX_PRIVATE_USERNAME / UV_INDEX_PRIVATE_PASSWORD) also fail with uv upgrade"
+  ],
+  "likely_external": false,
+  "external_evidence": "",
+  "possible_duplicates": [
+    {
+      "number": 14969,
+      "reason": "Same symptom class: a uv subcommand (uv tool upgrade) gets 401 from an Azure DevOps private index while the install/resolve path with the same credentials works. Closed as completed. Different mechanism (credentials masked in the uv-receipt), so related rather than identical."
+    },
+    {
+      "number": 18611,
+      "reason": "Same mechanism family: credentials for an explicit private index are not supplied on the 401 path for a given command. Closed as completed. The command and credential source differ (keyring-provider subprocess vs. UV_EXTRA_INDEX_URL), so this is related rather than a confirmed duplicate."
+    }
+  ],
+  "confidence": "medium",
+  "escalate_to_human": false,
+  "escalation_reason": "",
+  "rationale": "The reporter says uv sync --upgrade authenticates with the same UV_EXTRA_INDEX_URL credentials that uv upgrade ignores, and uv upgrade re-resolves dependencies, so the same credentials should apply. That points to a uv defect rather than a config mistake or a dependency constraint, so bug matches the reporter's label. The repro (pyproject, env var, commands, version, platform) is specific enough for a maintainer to act on. Search found two closed, related 401 issues (14969, 18611) but no exact duplicate. The docs search was rate-limited and the index-docs read returned 404, so the docs check for the documented env var behaviour was not completed. Confidence is medium for that reason."
+}

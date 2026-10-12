@@ -1,0 +1,25 @@
+[project]
+name = "triage"
+version = "0.1.0"
+description = "Read-only AI triage assistant for astral-sh/uv issues — an FDE case study"
+authors = [
+    { name = "William Edwardo Gunawan", email = "125692594+wiledw@users.noreply.github.com" }
+]
+requires-python = ">=3.11"
+dependencies = [
+    "anthropic>=1.13.0",
+    "httpx>=0.28.1",
+    "pydantic>=2.14.1",
+]
+
+[project.scripts]
+triage = "triage:main"
+
+[build-system]
+requires = ["uv_build>=0.11.6,<0.12.0"]
+build-backend = "uv_build"
+
+[dependency-groups]
+dev = [
+    "pytest>=9.1.1",
+]

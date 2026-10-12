@@ -1,0 +1,392 @@
+{
+ "21009": {
+  "type": "enhancement",
+  "type_differs_from_reporter": false,
+  "needs_mre": false,
+  "missing_info": [],
+  "likely_external": false,
+  "external_evidence": "",
+  "possible_duplicates": [],
+  "related_issues": [
+   {
+    "number": 17780,
+    "reason": "Discusses --active flag behaviour for uv add/sync; context for how --active works"
+   },
+   {
+    "number": 15603,
+    "reason": "uv sync --active interacting with the active/project venv; related --active behaviour"
+   }
+  ],
+  "confidence": "medium",
+  "escalate_to_human": false,
+  "escalation_reason": "",
+  "rationale": "Reporter asks for a new --active flag on uv lock as a temporary workaround for the underlying problem in #19832 (uv lock failing on an invalid .venv). The underlying failure is the actual bug and is tracked there; this request is for new behaviour, so enhancement. Searches did not surface #19832 itself, so it is not listed as a duplicate; maintainers likely close in favour of fixing #19832 since lock should not need the project venv. No reproduction needed: the layout of .venv is described."
+ },
+ "20102": {
+  "type": "question",
+  "type_differs_from_reporter": true,
+  "needs_mre": false,
+  "missing_info": [],
+  "likely_external": false,
+  "external_evidence": "",
+  "possible_duplicates": [],
+  "related_issues": [
+   {
+    "number": 18745,
+    "reason": "Reporter cites it: how `uv pip compile --universal` determines the Python version range (undocumented); this issue is about the lower bound."
+   }
+  ],
+  "confidence": "medium",
+  "escalate_to_human": false,
+  "escalation_reason": "",
+  "rationale": "uv pip compile --universal takes its lower Python bound from the discovered interpreter (or --python/--python-version) when there is no requires-python; the verbose log shows it found a .venv in a parent folder with a newer Python. This is the expected design, and --python-version 3.11 is the documented fix, which the reporter already found. The reporter's assumption that it starts from the current Python is not documented either way, so it is a question (possibly a docs gap), not a bug. Related to 18745, the open question about how the universal range is determined, but not the same request. I did not read the doc page on pip compile, so the docs wording is unverified."
+ },
+ "20875": {
+  "type": "enhancement",
+  "type_differs_from_reporter": true,
+  "needs_mre": false,
+  "missing_info": [],
+  "likely_external": false,
+  "external_evidence": "",
+  "possible_duplicates": [],
+  "related_issues": [
+   {
+    "number": 16494,
+    "reason": "Build-system.requires resolution involving prerelease-only dependencies; related context on how build requirements handle prereleases, but a different problem."
+   }
+  ],
+  "confidence": "medium",
+  "escalate_to_human": false,
+  "escalation_reason": "",
+  "rationale": "The reporter acknowledges that 0.12 changed the default to if-necessary and that --prerelease and related settings have never applied to build requirements. This is a request to extend those options to build requirements, or to add a new one such as --build-prerelease, so it is an enhancement rather than a bug. The silent-ignore point is a fair complaint but is not a documented contract violation. The report has versions, a clear description and workarounds, so no MRE is needed. Searches found no duplicate of this request; only issue 16494 surfaced as loosely related. Docs search returned no page documenting prerelease handling for build requirements, which I did not read in full."
+ },
+ "20917": {
+  "type": "bug",
+  "type_differs_from_reporter": false,
+  "needs_mre": true,
+  "missing_info": [
+   "pyproject.toml of the workspace root and the member showing both dev groups",
+   "exact command run (uv sync / uv sync --package / from member dir) and flags",
+   "last uv version where the additive behavior worked",
+   "output of uv sync -v or uv tree showing which groups were included"
+  ],
+  "likely_external": false,
+  "external_evidence": "",
+  "possible_duplicates": [],
+  "related_issues": [],
+  "confidence": "low",
+  "escalate_to_human": true,
+  "escalation_reason": "low confidence (forced by guardrail)",
+  "rationale": "Reporter says behavior changed at 0.12.1 (regression signal), but provides no pyproject, command, or last-good version. Workspace docs I read do not describe workspace-root groups being merged into member groups, so the contract is unclear and a maintainer must see the config to decide whether this is a regression or an expected group-scoping behavior. Searches found no duplicate issues."
+ },
+ "21635": {
+  "type": "enhancement",
+  "type_differs_from_reporter": false,
+  "needs_mre": false,
+  "missing_info": [],
+  "likely_external": false,
+  "external_evidence": "",
+  "possible_duplicates": [],
+  "related_issues": [],
+  "confidence": "medium",
+  "escalate_to_human": false,
+  "escalation_reason": "",
+  "rationale": "The reporter asks uv (most likely the uv_build backend, which infers the readme content type from the file extension) to recognize Org-format READMEs by default. This is a request for new behavior, not a violation of a documented contract, so it is an enhancement, matching the reporter's label. The issue does not include the exact error or command. A search for similar issues returned none, and the docs search returned nothing relevant on readme extensions. I did not check the build-backend docs or source, so the likely cause is a guess."
+ },
+ "21576": {
+  "type": "question",
+  "type_differs_from_reporter": true,
+  "needs_mre": true,
+  "missing_info": [
+   "Full Dockerfile (all stages, including any RUN steps and any stage using ghcr.io/astral-sh/uv:latest as a FROM or RUN --mount source)",
+   "Which Dockerfile step fails and the full BuildKit log",
+   "Resolved image digests from the working and failing builds (docker buildx imagetools inspect)",
+   "Docker/BuildKit/runc versions and build environment (CI runner, registry mirror or proxy)"
+  ],
+  "likely_external": false,
+  "external_evidence": "",
+  "possible_duplicates": [],
+  "related_issues": [
+   {
+    "number": 8635,
+    "reason": "Closed bug about using the distroless uv image as a command-line tool; related because the uv:latest image has no shell or /bin/sh."
+   }
+  ],
+  "confidence": "low",
+  "escalate_to_human": true,
+  "escalation_reason": "low confidence (forced by guardrail)",
+  "rationale": "The uv:latest image is distroless (scratch-based, per docs/guides/integration/docker.md) and has no /bin/sh. A plain `COPY --from=ghcr.io/astral-sh/uv:latest /uv /uvx ...` does not start a container, so the 'exec /bin/sh: no such file' error at container init most likely comes from a RUN step executing in the wrong stage or image, a base image or registry/mirror issue, or the Docker toolchain, not from a uv regression. The reporter's actual ask is how to pin the previous version or digest. The docs say to pin a version tag or SHA256 rather than :latest. Without the full Dockerfile and build log a maintainer can't diagnose this. Searches found no duplicate."
+ },
+ "21747": {
+  "type": "enhancement",
+  "type_differs_from_reporter": true,
+  "needs_mre": false,
+  "missing_info": [],
+  "likely_external": false,
+  "external_evidence": "",
+  "possible_duplicates": [],
+  "related_issues": [
+   {
+    "number": 6349,
+    "reason": "Open enhancement requesting that uv.lock support different index URLs across developer machines and CI; same underlying need (overriding the lockfile's recorded index at install time)."
+   }
+  ],
+  "confidence": "medium",
+  "escalate_to_human": false,
+  "escalation_reason": "",
+  "rationale": "With --frozen, uv uses uv.lock as-is without re-resolving, so index settings such as UV_DEFAULT_INDEX and UV_INDEX_STRATEGY do not take part in resolution; the locked registry URLs are used for download. This follows from how frozen syncs work and I found no documented guarantee that the env vars rewrite locked URLs, so it is not clearly a bug. The reporter wants the lockfile index overridden by the env var, which matches open enhancement #6349. Searches turned up no exact duplicate. I did not read the sync or index docs page in full, so confidence is medium."
+ },
+ "20983": {
+  "type": "enhancement",
+  "type_differs_from_reporter": false,
+  "needs_mre": false,
+  "missing_info": [],
+  "likely_external": false,
+  "external_evidence": "",
+  "possible_duplicates": [],
+  "related_issues": [
+   {
+    "number": 19981,
+    "reason": "Another request to reduce the burden of per-vulnerability --ignore/--ignore-until-fixed lists in uv audit (via a VEX file)."
+   },
+   {
+    "number": 19265,
+    "reason": "Also about ergonomics of the ignore-until-fixed setting in uv audit."
+   },
+   {
+    "number": 18506,
+    "reason": "Roadmap/tracking issue for uv audit; post-MVP features are tracked there."
+   },
+   {
+    "number": 18912,
+    "reason": "Another uv audit filtering enhancement (--direct-only), different request."
+   }
+  ],
+  "confidence": "medium",
+  "escalate_to_human": false,
+  "escalation_reason": "",
+  "rationale": "The reporter asks for a new magic value ALL for ignore-until-fixed so uv audit shows only vulnerabilities that already have a fix. This is new behaviour on a working feature, not a bug, and the report has no error or reproduction needs. Searches found no issue with the same request, only related uv-audit enhancements (#19981, #19265, #18912) and the roadmap #18506. The proposal is somewhat muddled, since ignore-until-fixed takes vulnerability IDs and ignores unfixed ones, and the reporter writes ruff in places. A maintainer may want a differently shaped flag, such as a fix-available-only filter. I did not read a uv audit docs page; the docs search returned nothing relevant."
+ },
+ "20567": {
+  "type": "enhancement",
+  "type_differs_from_reporter": true,
+  "needs_mre": false,
+  "missing_info": [],
+  "likely_external": true,
+  "external_evidence": "Reporter states disabling Bitdefender Incident Sensor eliminates the error (multiple 200-iteration loops clean); with it enabled EndUpdateResourceW fails randomly with ERROR_OPEN_FAILED (110), a transient file-inspection lock; retry after 10 ms always succeeds.",
+  "possible_duplicates": [],
+  "related_issues": [
+   {
+    "number": 19873,
+    "reason": "Same 'Failed to update Windows PE resources' error on venv creation, closed as duplicate with no trigger identified."
+   },
+   {
+    "number": 15968,
+    "reason": "Windows 'Access is denied' in corporate AV environment; same class of transient AV interference but different operation (directory removal)."
+   }
+  ],
+  "confidence": "medium",
+  "escalate_to_human": false,
+  "escalation_reason": "",
+  "rationale": "Failure is triggered by Bitdefender's endpoint sensor transiently locking the temp trampoline exe; it disappears when the sensor is disabled, so the root cause is external. uv has no documented guarantee of tolerance for AV interference, and the reporter proposes a retry/backoff around the PE resource update, which is a feature request for robustness rather than a contract violation. The command, exact error and version are given with a loop repro, so no MRE is needed. Searches found only #19873 (same error, closed duplicate) and #15968 (related AV access-denied) and no open tracking issue for PE-update retries."
+ },
+ "20996": {
+  "type": "question",
+  "type_differs_from_reporter": false,
+  "needs_mre": true,
+  "missing_info": [
+   "pyproject.toml / dependency declaration (the exact redis[hiredis] spec and any pins or constraints)",
+   "Text output of uv sync -v (the screenshot is not diagnosable), and which package is resolved to 2.0.0 (hiredis? redis?)",
+   "Index configuration (mirror/proxy, exclude-newer, uv.toml) and whether a uv.lock already exists pinning the old version",
+   "uv version is 0.12.2, which looks old; ask them to retry on the latest uv"
+  ],
+  "likely_external": false,
+  "external_evidence": "",
+  "possible_duplicates": [],
+  "related_issues": [],
+  "confidence": "low",
+  "escalate_to_human": true,
+  "escalation_reason": "low confidence (forced by guardrail)",
+  "rationale": "The report has only a screenshot and no pyproject, command output or lockfile. Package metadata shows redis 8.1.0 requires hiredis>=3.2.0 and the latest hiredis is 3.4.2, so a resolution to '2.0.0' is not explained by redis's own constraints. The likely causes are a local pin or lock, a mirror or exclude-newer setting, or a stale uv.lock. A maintainer can't act without the project config and verbose output. No similar issues turned up in search. I could not see the screenshot, so I did not find the actual cause and I'm treating this as a config question until shown otherwise."
+ },
+ "21743": {
+  "type": "enhancement",
+  "type_differs_from_reporter": true,
+  "needs_mre": false,
+  "missing_info": [],
+  "likely_external": true,
+  "external_evidence": "Reporter's backtrace: abort() <- AWS-LC rand_bytes_core <- RAND_bytes <- aws_lc_rs::rand::fill <- rustls SessionId::random; on aarch64 FEAT_RNG, AWS-LC uses RNDR with no retry. Reporter links upstream aws/aws-lc#3453 and states 'It's ultimately an AWS-LC bug'. Workaround OPENSSL_armcap=~0x20000.",
+  "possible_duplicates": [],
+  "related_issues": [],
+  "confidence": "medium",
+  "escalate_to_human": false,
+  "escalation_reason": "",
+  "rationale": "The crash originates in AWS-LC (RNDR instruction with no retry), a dependency of rustls/aws-lc-rs, with an upstream issue already filed; the reporter acknowledges it is an AWS-LC bug. The report has backtrace, version and environment, so no MRE is needed. What is asked of uv (document the workaround, track the upstream fix, prefer getrandom, or add a config knob) is new behaviour or documentation, so enhancement rather than bug. Searches of the issue tracker found no earlier related issues; I did not search the docs for a page covering this, as TLS docs have nothing on crypto provider RNG."
+ },
+ "20050": {
+  "type": "enhancement",
+  "type_differs_from_reporter": true,
+  "needs_mre": false,
+  "missing_info": [],
+  "likely_external": false,
+  "external_evidence": "",
+  "possible_duplicates": [],
+  "related_issues": [],
+  "confidence": "low",
+  "escalate_to_human": true,
+  "escalation_reason": "low confidence (forced by guardrail)",
+  "rationale": "The reporter says the failure is deliberate behaviour introduced by #19991 (uv build errors when the cache dir is inside the source tree) and asks for it to be relaxed for the GitLab CI pattern, where the cache must live in the project dir. No docs contract is violated by the error itself, so this is a request for different behaviour (enhancement/follow-up to #19991), not a bug. The reproduction is clear without an MRE. Searches did not surface #19991 or any duplicate, so the link is unverified and confidence is low."
+ },
+ "21337": {
+  "type": "bug",
+  "type_differs_from_reporter": false,
+  "needs_mre": true,
+  "missing_info": [
+   "Full crash report with symbolicated frames below abort() (only the first three frames were posted)",
+   "Output of the same uvx command run with RUST_BACKTRACE=1 and -vv, and the panic message if any",
+   "A standalone reproduction without opencode (e.g. a small Python subprocess.Popen script with piped stdin/stdout) that crashes uv",
+   "Whether the crash also happens with the official installer binary rather than the Homebrew build, and on a previous uv version",
+   "Environment variables passed by the host app (e.g. empty env, missing HOME, PATH or TMPDIR)"
+  ],
+  "likely_external": false,
+  "external_evidence": "",
+  "possible_duplicates": [],
+  "related_issues": [
+   {
+    "number": 12692,
+    "reason": "Also involves running `uvx mcp-server-git` as a child process of a host app, but about orphaned processes on kill, not a crash"
+   }
+  ],
+  "confidence": "low",
+  "escalate_to_human": true,
+  "escalation_reason": "low confidence (forced by guardrail)",
+  "rationale": "A SIGABRT in uv is plainly unintended behaviour, so this is a bug. The report has no panic message, no backtrace beyond the first libc frames, and no standalone repro. The trigger is a specific host app (opencode) with piped stdio, so a local cause such as a stripped environment cannot be ruled out, and a maintainer would need to ask for more information first. Searches for the abort/SIGABRT/macOS/piped-stdio symptoms found no duplicate; only the loosely related #12692 appeared."
+ },
+ "19988": {
+  "type": "question",
+  "type_differs_from_reporter": true,
+  "needs_mre": false,
+  "missing_info": [],
+  "likely_external": true,
+  "external_evidence": "The PyTorch CPU index publishes torchvision 0.27.1+df56172 with only win_arm64 wheels alongside the +cpu builds. Local version segments compare as 'df56172' > 'cpu', so that build is the highest version. The index's version/wheel layout is the root cause.",
+  "possible_duplicates": [],
+  "related_issues": [
+   {
+    "number": 7202,
+    "reason": "Earlier torch/torchvision resolution problem with PyTorch indexes and local versions via tool.uv.sources"
+   }
+  ],
+  "confidence": "low",
+  "escalate_to_human": true,
+  "escalation_reason": "low confidence (forced by guardrail)",
+  "rationale": "uv resolves universally and picks the highest version, and the PyTorch index's win_arm64-only +df56172 local version sorts above +cpu. The package-metadata tool did not show the index's file list, and searches found no matching duplicate. Likely fixes are an index-side cleanup or a user-side pin, such as constraint-dependencies on torchvision==0.27.1+cpu or tool.uv.environments restricted to Linux. Not clearly a uv contract violation, though a maintainer might treat platform-aware local-version selection as an enhancement."
+ },
+ "20613": {
+  "type": "question",
+  "type_differs_from_reporter": true,
+  "needs_mre": false,
+  "missing_info": [],
+  "likely_external": false,
+  "external_evidence": "",
+  "possible_duplicates": [],
+  "related_issues": [],
+  "confidence": "high",
+  "escalate_to_human": false,
+  "escalation_reason": "",
+  "rationale": "The reporter wants to declare the Python version and dependencies in comments at the top of a single script and then run it with `uv run main.py`. uv already supports this through PEP 723 inline script metadata (a `# /// script` block with `requires-python` and `dependencies`). docs/guides/scripts.md covers it under 'Declaring script dependencies', and `uv init --script` and `uv add --script` create and edit the block. The reporter's custom comment syntax is not a standard, but the request is already met by an existing feature, so this is a question and not an enhancement. The one search for duplicates returned only unrelated issues, so I list none."
+ },
+ "20984": {
+  "type": "enhancement",
+  "type_differs_from_reporter": false,
+  "needs_mre": false,
+  "missing_info": [],
+  "likely_external": false,
+  "external_evidence": "",
+  "possible_duplicates": [],
+  "related_issues": [
+   {
+    "number": 12854,
+    "reason": "Earlier request to show cache usage/size; context for why `uv cache size` exists, but not the same request (default output format)."
+   }
+  ],
+  "confidence": "high",
+  "escalate_to_human": false,
+  "escalation_reason": "",
+  "rationale": "uv cache size works as designed: it prints raw bytes by default and offers --human, as documented in --help. The reporter wants the default flipped to human-readable with a new --bytes flag for scripts. That is a behaviour/design change to a preview-gated command, so it is an enhancement, matching the reporter's label. Searches found no earlier issue requesting the same default change (the original feature request #15821 cited in the body did not appear in search results). #12854 is only loosely related context."
+ },
+ "21096": {
+  "type": "bug",
+  "type_differs_from_reporter": false,
+  "needs_mre": false,
+  "missing_info": [],
+  "likely_external": false,
+  "external_evidence": "",
+  "possible_duplicates": [],
+  "related_issues": [
+   {
+    "number": 21016,
+    "reason": "Relative --find-links paths failing in requirements files; similar relative-path handling for find-links but a different context (requirements file, 'relative URL without a base')."
+   }
+  ],
+  "confidence": "medium",
+  "escalate_to_human": false,
+  "escalation_reason": "",
+  "rationale": "The report includes a self-contained repro with exact error and uv version. Running the script by path from another directory resolves the script's relative index (./links) against the CWD, not the script's directory. The same script works when run from its own directory, so the result depends on where uv is invoked. The scripts guide does not say how relative index paths in inline metadata are resolved, so the contract is implicit. Path-relative-to-the-declaring-file is the obvious intent, and the reporter's expectation is reasonable, so I lean bug over enhancement. No earlier issue with the same root cause turned up in search; 21016 is related but concerns requirements files."
+ },
+ "20994": {
+  "type": "question",
+  "type_differs_from_reporter": false,
+  "needs_mre": true,
+  "missing_info": [
+   "Full pyproject.toml of private-package and the workspace root (the two dependency-groups snippets in the report are identical, so the actual change is unclear)",
+   "Output of `uv tree --invert --package future` or the uv.lock entry showing what requires the PyPI `future` package",
+   "Full command output with -v, and whether private-package-1/2 are published on any index or are workspace members/sources"
+  ],
+  "likely_external": false,
+  "external_evidence": "",
+  "possible_duplicates": [],
+  "related_issues": [],
+  "confidence": "medium",
+  "escalate_to_human": false,
+  "escalation_reason": "",
+  "rationale": "An extra name is only a label (`private-package[future]`) and uv does not resolve it as a package name, so extra 'future' pulling PyPI `future` is not expected. The most likely cause is that some dependency (possibly a transitive one, or private-package-1/2 not resolving locally) requires PyPI `future`, or a config mistake in the reporter's pyproject; the report is internally inconsistent (identical before/after snippets). Searches of issues and docs found no matching issue; I did not read a specific docs page. Reporter labelled it a question and no contract violation is shown, so it is a question that needs the lockfile/tree to confirm."
+ },
+ "21857": {
+  "type": "bug",
+  "type_differs_from_reporter": false,
+  "needs_mre": false,
+  "missing_info": [],
+  "likely_external": false,
+  "external_evidence": "",
+  "possible_duplicates": [],
+  "related_issues": [],
+  "confidence": "medium",
+  "escalate_to_human": true,
+  "escalation_reason": "Security concern: a repository-controlled symlink causes uv to truncate an arbitrary writable file outside the checkout during a Git dependency install. Should be routed per uv's security policy.",
+  "rationale": "The reporter gives a concrete, self-contained reproduction (uv 0.12.13 and 0.12.17 on main): a Git dependency tracks `.ok` as a symlink, and uv's checkout-ready marker write follows it and truncates the target, while native git does not. Writing a marker through a symlink is plainly unintended behaviour, so this is a bug rather than an enhancement. The cause is in uv, so it is not external. Two issue searches (the `.ok` symlink marker, and git dependency symlink security) found no earlier issues. The security impact (arbitrary file truncation triggered by an untrusted Git dependency) warrants human review."
+ },
+ "21065": {
+  "type": "enhancement",
+  "type_differs_from_reporter": true,
+  "needs_mre": true,
+  "missing_info": [
+   "Full pyproject.toml, especially [build-system] (which build backend: uv_build, setuptools, other?)",
+   "Full contents of the sdist and of pyproject.toml vs pyproject.toml.orig (what differs)",
+   "Whether the file uses TOML 1.1-only syntax (e.g. multi-line inline tables) elsewhere",
+   "Note: `author` is not a valid [project] key (should be `authors`); confirm what the real file contains"
+  ],
+  "likely_external": false,
+  "external_evidence": "",
+  "possible_duplicates": [],
+  "related_issues": [
+   {
+    "number": 20049,
+    "reason": "Same theme: uv's TOML parser accepts TOML 1.1 syntax that TOML 1.0 consumers (tomllib) reject; likely the context for pyproject.toml being rewritten to 1.0 with a .orig kept in the sdist."
+   }
+  ],
+  "confidence": "low",
+  "escalate_to_human": true,
+  "escalation_reason": "low confidence (forced by guardrail)",
+  "rationale": "The reporter's snippet is plain TOML 1.0, so the title's TOML 1.1 claim is not demonstrated, and `author` is not a standard [project] field. The pyproject.toml.orig in the sdist looks like deliberate backend behaviour (a TOML 1.0 downgrade keeping the original) rather than a violated contract, so I lean enhancement (stop shipping the .orig). Searches found no duplicate; #20049 is related context. The build backend and full pyproject are unknown, so a maintainer would need to ask. I could not confirm the .orig mechanism from the docs or issues."
+ }
+}

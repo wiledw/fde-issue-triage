@@ -1,0 +1,4 @@
+{"ts": "2026-10-12T11:48:04.156Z", "run_id": "21641", "seq": 1, "event": "tool_call", "name": "search_issues", "input": {"query": "Invalid tar file failed to unpack sdist connection reset"}}
+{"ts": "2026-10-12T11:48:04.156Z", "run_id": "21641", "seq": 2, "event": "tool_result", "is_error": false, "content": "No matching earlier issues.", "seen_issue_numbers": []}
+{"ts": "2026-10-12T11:48:07.013Z", "run_id": "21641", "seq": 1, "event": "tool_call", "name": "get_package_metadata", "input": {"name": "wxpython", "version": "4.3.1"}}
+{"ts": "2026-10-12T11:48:07.013Z", "run_id": "21641", "seq": 2, "event": "tool_result", "is_error": false, "content": "{\n \"name\": \"wxPython\",\n \"version\": \"4.3.1\",\n \"requires_python\": \">=3.10\",\n \"requires_dist\": [\n  \"numpy; python_version >= \\\"3.0\\\" and python_version < \\\"3.12\\\"\",\n  \"typing-extensions; python_version < \\\"3.11\\\"\"\n ]\n}", "seen_issue_numbers": []}

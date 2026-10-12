@@ -1,0 +1,4 @@
+{"ts": "2026-10-12T12:04:42.697Z", "run_id": "20336", "seq": 1, "event": "tool_call", "name": "search_issues", "input": {"query": "publish Artifactory subfolder upload path"}}
+{"ts": "2026-10-12T12:04:42.697Z", "run_id": "20336", "seq": 2, "event": "tool_result", "is_error": false, "content": "No matching earlier issues.", "seen_issue_numbers": []}
+{"ts": "2026-10-12T12:04:46.130Z", "run_id": "20336", "seq": 1, "event": "tool_call", "name": "search_uv_docs", "input": {"query": "uv publish upload URL custom index"}}
+{"ts": "2026-10-12T12:04:46.130Z", "run_id": "20336", "seq": 2, "event": "tool_result", "is_error": false, "content": "docs/concepts/indexes.md\ndocs/guides/package.md\ndocs/concepts/resolution.md", "seen_issue_numbers": []}
