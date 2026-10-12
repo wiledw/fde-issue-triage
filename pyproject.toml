@@ -5,6 +5,7 @@ description = "Read-only AI triage assistant for astral-sh/uv issues — an FDE 
 authors = [
     { name = "William Edwardo Gunawan", email = "125692594+wiledw@users.noreply.github.com" }
 ]
+license = "MIT"
 requires-python = ">=3.11"
 dependencies = [
     "anthropic>=1.13.0",
